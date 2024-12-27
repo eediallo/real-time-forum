@@ -48,6 +48,7 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 		IsAuthenticated:      isAuthenticated,
 		LikeDislikeCommentJS: likeDislikeCommentJsPath,
 		FilterJS:             filterJsPath,
+		WS: wsPath,
 	}
 
 	RenderTemplate(w, "dashboard", data)

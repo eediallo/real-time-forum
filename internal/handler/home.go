@@ -21,7 +21,6 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 		GolangOfficialPage: goOfficialPagePath,
 		RustOfficialPage:   rustOfficialPagePath,
 		JSOfficialPage:     jsOfficialPagePath,
-		WS: wsPath,
 	}
 	RenderTemplate(w, "index", data)
 }
