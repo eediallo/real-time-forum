@@ -51,6 +51,7 @@ type PageData struct {
 	LikeDislikeCommentJS string
 	FilterJS             string
 	WS string
+	OnlineUsers []string
 }
 
 var (
@@ -87,6 +88,7 @@ var (
 
 	// status code
 
+	onlineUsers = []string{}
 )
 
 type StatT = uint8

@@ -35,6 +35,13 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	onlineUsers, err := fetchOnlineUsers()
+	if err != nil {
+		log.Printf("Error retrieving online users : %s", err.Error())
+		ErrorPageHandler(w, "Error retrieving online users", http.StatusInternalServerError)
+		return
+	}
+
 	data := PageData{
 		Username:             username,
 		HeaderCSS:            headerCSS,
@@ -49,6 +56,7 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 		LikeDislikeCommentJS: likeDislikeCommentJsPath,
 		FilterJS:             filterJsPath,
 		WS: wsPath,
+		OnlineUsers: onlineUsers,
 	}
 
 	RenderTemplate(w, "dashboard", data)
@@ -110,4 +118,24 @@ func fetchComments(postID int) ([]Comment, error) {
 	}
 
 	return comments, nil
+}
+
+// fetchOnlineUsers retrieves the list of online users from the database.
+func fetchOnlineUsers() ([]string, error) {
+	rows, err := db.DB.Query("SELECT username FROM User WHERE is_online = 1")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var users []string
+	for rows.Next() {
+		var username string
+		if err := rows.Scan(&username); err != nil {
+			return nil, err
+		}
+		users = append(users, username)
+	}
+
+	return users, nil
 }
