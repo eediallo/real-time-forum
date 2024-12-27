@@ -15,19 +15,23 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	var errorMessage string
 	if r.Method == http.MethodPost {
 		email := r.FormValue("email")
+		nickName := r.FormValue("nickname")
 		password := r.FormValue("password")
 
-		if email == "" {
-			errorMessage += "Email is required. "
+		if email == "" && nickName == "" {
+			errorMessage += "Email or NickName is required. "
 		}
 		if password == "" {
 			errorMessage += "Password is required. "
 		}
 
-		var storedHash string
-		var userID int
-		var username string
-		err := db.DB.QueryRow(userByEmailQuery, email).Scan(&storedHash, &userID, &username)
+		var(
+			storedHash string
+			userID int
+			username string
+		)
+
+		err := db.DB.QueryRow(userByEmailQuery, email, nickName).Scan(&storedHash, &userID, &nickName,  &username )
 		if err != nil {
 			if err == sql.ErrNoRows {
 				ErrorPageHandler(w, "User not found", nil)

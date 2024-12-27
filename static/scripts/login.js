@@ -1,17 +1,19 @@
 function validateForm(event) {
-    var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
-    var errorMessage = '';
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const nickName = document.getElementById("nickname").value;
+    let errorMessage = "";
 
-    if (!email) {
-        errorMessage += 'Email is required.<br>';
+    if (!email && !nickName) {
+        errorMessage += "Either email or nickname is required.<br>";
     }
+
     if (!password) {
-        errorMessage += 'Password is required.<br>';
+        errorMessage += "Password is required.<br>";
     }
 
     if (errorMessage) {
-        document.getElementById('error-message').innerHTML = errorMessage;
+        document.getElementById("error-message").innerHTML = errorMessage;
         event.preventDefault(); // Prevent form submission
     }
 }

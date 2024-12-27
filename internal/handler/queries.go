@@ -53,9 +53,9 @@ const (
 		(c.CreatedAt) ASC
 	`
 	userByEmailQuery = `
-	SELECT PasswordHash, UserID, Username
+	SELECT PasswordHash, UserID, NickName, Username
 	FROM User
-	WHERE Email = ?
+	WHERE Email = ? OR NickName = ?
 	`
 	deleteSessionByUserIDQuery = `
 	DELETE
