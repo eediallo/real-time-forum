@@ -5,6 +5,7 @@ import (
 
 	"github.com/eediallo/real_time_forum/internal/handler"
 	"github.com/eediallo/real_time_forum/internal/middleware"
+	"github.com/eediallo/real_time_forum/internal/ws"
 	"github.com/gorilla/mux"
 )
 
@@ -18,7 +19,7 @@ func RunServer() (*http.Server, error) {
 	r.HandleFunc("/dashboard", handler.DashboardPage)
 
 	// WebSocket route
-	// r.HandleFunc("/ws", wsEndpoint)
+	r.HandleFunc("/ws", ws.WsEndpoint)
 
 	// Protected routes
 	r.Handle("/users/logout", middleware.AuthMiddleware(http.HandlerFunc(handler.LogoutUser)))
