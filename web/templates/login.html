@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="{{.CssLoginPath}}">
-    <link rel="stylesheet" href="{{.LogoCSS}}">
+    <link rel="stylesheet" href="{{.CssLoginPath}}" />
+    <link rel="stylesheet" href="{{.LogoCSS}}" />
     <script src="{{.LoginJS}}" defer></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="logo_container">
-        <a href="{{.HomePath}}">
-            <img src="{{.Logo}}" alt="Return to Home Page" class="logo">
-        </a>
+      <a href="{{.HomePath}}">
+        <img src="{{.Logo}}" alt="Return to Home Page" class="logo" />
+      </a>
     </div>
     <div class="login-container">
-        <h1>Login</h1>
-        <div id="error-message" class="error-message">
-            {{.ErrorMessage}}
+      <h1>Login</h1>
+      <div id="error-message" class="error-message">{{.ErrorMessage}}</div>
+      <form action="/users/login" method="POST" onsubmit="validateForm(event)">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" />
+        <label for="nickname">Nickname:</label>
+        <input type="text" id="nickname" name="nickname" /> <br />
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" />
+        <input type="submit" value="Login" />
+        <label
+          ><input type="checkbox" checked="checked" name="remember" /> Remember
+          me</label
+        >
+        <div class="container">
+          <span class="psw"><a href="#">Forgot a password?</a></span>
         </div>
-        <form action="/users/login" method="POST" onsubmit="validateForm(event)">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password">
-            <input type="submit" value="Login">
-            <label><input type="checkbox" checked="checked" name="remember"> Remember me</label>
-            <div class="container">
-                <span class="psw"><a href="#">Forgot a password?</a></span>
-            </div>
-        </form>
-        <p>Don't have an account? <a href="/users/sign_up">Register here</a></p>
+      </form>
+      <p>Don't have an account? <a href="/users/sign_up">Register here</a></p>
     </div>
-
-</body>
-
+  </body>
 </html>
