@@ -63,6 +63,13 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		// update is online field
+		_, err = db.DB.Exec("UPDATE User SET is_online = 1 WHERE UserID = ?", userID)
+		if err != nil {
+			log.Println("Error updating user online status:", err)
+			http.Redirect(w, r, loginPath, http.StatusSeeOther)
+			return
+		}
 		cookie := http.Cookie{
 			Name:     "session_id",
 			Value:    sessionID.String(),
