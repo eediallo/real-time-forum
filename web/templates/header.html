@@ -1,0 +1,22 @@
+<header>
+    <div>
+        <a href={{.HomePath}}>
+            <img src="{{.Logo}}" alt="forum logo" class="logo">
+        </a>
+        
+    </div>
+    <div class="search-bar">
+        <input type="text" id="search" placeholder="Search">
+        <i class="material-icons icon-search">search</i>
+    </div>
+
+    <div class="auth-links">
+        {{if .IsAuthenticated}}
+        <button class="profile"><a href="web/templates/edit.html">Profile</a></button>
+        <button class="logout"><a href="../users/logout">Logout</a></button> 
+        {{else}}
+        <button class="profile"><a href="../users/login">Login</a></button>
+        <button class="logout"><a href="../users/sign_up">Sign Up</a></button>
+        {{end}}
+</div>
+</header>

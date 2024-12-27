@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{.HeaderCSS}}">
+    <link rel="stylesheet" href="{{.DashboardCSS}}">
+    <link rel="stylesheet" href="{{.GoogleIcons}}">
+    <script src="{{.CommentJS}}" defer></script>
+    <script src="{{.LikeDislike}}" defer></script>
+    <script src="{{.LikeDislikeCommentJS}}" defer></script>
+    <script src="{{.FilterJS}}" defer></script>
+</head>
+
+<body>
+    <!-- Header -->
+    {{template "header.html" .}}
+    <h1 class="welcome">Welcome to WebForum {{.Username}}!</h1>
+    <div class="dashboard-container">
+        <!-- Middle Content Area -->
+        <div class="post-container">
+            <h2>Create a Post</h2>
+            <form class="post-form" action="/post" method="POST" enctype="multipart/form-data">
+                <label type="text" name="title">Enter Title of your post:</label><br>
+                <input name="title" id="title" /><br>
+
+                <label type="text" name="title">Select a category:</label><br>
+                <select name="category" id="category" required>
+                    <option value="Golang">Golang</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Rust">Rust</option>
+                </select><br>
+                <textarea name="content" id="content" rows="10" cols="40" placeholder="What's on your mind?"
+                    required></textarea><br>
+                <input type="submit" value="Post" class="post-input">
+            </form>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="posts">
+            <!-- Display posts here -->
+            <h2 style="text-align: center;">Posts</h2>
+            {{range .Posts}}
+            <div class="post">
+                <h3>{{.Title}}</h3>
+                <p>{{.Content}}</p>
+                <p><small>Posted by: {{.Username}} on: {{.CreatedAt}}</small></p>
+                <p>Category: <span class="category">{{.Category}}</span></p>
+
+                {{if .MediaPath}}
+                {{if (or (eq (ext .MediaPath) ".jpg") (eq (ext .MediaPath) ".png") (eq (ext .MediaPath) ".gif"))}}
+                <img src="/{{.MediaPath}}" alt="Post image">
+                {{else if (or (eq (ext .MediaPath) ".mp4") (eq (ext .MediaPath) ".webm"))}}
+                <video controls>
+                    <source src="/{{.MediaPath}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                {{end}}
+                {{end}}
+
+                <!-- Post Buttons -->
+                <div class="post-buttons">
+                    <button class="like-btn" data-post-id="{{.PostID}}">
+                        <i class="material-icons">thumb_up</i>
+                        <span class="like-count" id="like-count-{{.PostID}}">{{.LikeCount}}</span>
+                    </button>
+                    <button class="dislike-btn" data-post-id="{{.PostID}}">
+                        <i class="material-icons">thumb_down</i>
+                        <span class="dislike-count" id="dislike-count-{{.PostID}}">{{.DislikeCount}}</span>
+                    </button>
+                    <button class="comment-btn" data-post-id="{{.PostID}}">
+                        <i class="material-icons">comment</i>
+                        <span class="comment-count" id="comment-count-{{.PostID}}">{{.CommentCount}}</span>
+                    </button>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="comments" id="comments-{{.PostID}}" style="display: none;">
+                    {{range .Comments}}
+                    <div class="comment" id="comment-{{.CommentID}}">
+                        <p>{{.Content}}</p>
+                        <p><small>Commented by: {{.Username}} on: {{.CreatedAt}}</small></p>
+
+                        <!-- Comment Buttons -->
+                        <div class="comment-buttons">
+                            <button class="like-comment-btn" data-comment-id="{{.CommentID}}">
+                                like
+                                <span class="like-count" id="like-count-{{.CommentID}}">{{.LikeCount}}</span>
+                            </button>
+                            <button class="dislike-comment-btn" data-comment-id="{{.CommentID}}">
+                                dislike
+                                <span class="dislike-count" id="dislike-count-{{.CommentID}}">{{.DislikeCount}}</span>
+                            </button>
+                        </div>
+                    </div>
+                    {{else}}
+                    <p>No comments yet.</p>
+                    {{end}}
+
+                    <!-- Add Comment Form -->
+                    <form class="comment-form" action="/add_comment" method="POST">
+                        <input type="hidden" name="post_id" value="{{.PostID}}">
+                        <textarea name="content" placeholder="Add a comment" required></textarea><br>
+                        <input type="submit" value="Comment">
+                    </form>
+                </div>
+            </div>
+            {{end}}
+        </div>
+
+        <!-- Post Filter Buttons -->
+        <div class="filter-container">
+            <h3>Filter posts by categories</h3>
+            <button class="btn active" data-category="All">All</button>
+            <button class="btn" data-category="Golang">Golang</button>
+            <button class="btn" data-category="JavaScript">JavaScript</button>
+            <button class="btn" data-category="Rust">Rust</button>
+        </div>
+    </div>
+</body>
+
+</html>

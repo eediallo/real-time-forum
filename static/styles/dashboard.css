@@ -1,0 +1,155 @@
+*{
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fff;
+    font-family: 'Sniglet', 'Helvetica Neue', sans-serif;
+    color: black;
+    line-height: 1.6;
+    height: 100vh;
+}
+
+.welcome{
+    text-align: center;
+}
+
+.post-container{
+    margin-left: 20px;
+}
+.dashboard-container {
+    display: flex;
+    flex: 1;
+    justify-content: space-evenly;
+    overflow: hidden;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: baseline;
+}
+
+.post-form {
+    margin-bottom: 20px;
+}
+
+.post {
+    margin-left: 100px;
+    /* flex: 1; */
+    background-color: #fff;
+    justify-content: center;
+    flex-direction: center;
+    align-items: center;
+}
+
+
+.comments {
+    display: none;
+    margin-top: 20px;
+}
+
+.comment {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.comment-form {
+    margin-top: 20px;
+}
+
+.post-buttons {
+    display: flex;
+    margin-top: 10px;
+}
+
+.post-buttons button {
+    cursor: pointer;
+}
+@media (max-width: 600px) {
+    .header {
+       width: 100%;
+    }
+    .dashboard-container {
+        width: 100%;
+        display: block;
+        margin: auto;
+        text-align: center;
+
+    }
+    .like-btn, .dislike-btn,  .comment-btn {
+        width: 100%;
+        display: block;
+        margin: auto;
+    }
+
+}
+.post-buttons {
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
+    align-items: start;
+    width: 300px;
+    height: 50px;
+}
+
+.like-btn, .dislike-btn,  .comment-btn {
+    /* flex: 1; */
+    background-color: #5CE1E6;
+    color: black;
+    border: none;
+    padding: 7px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.post-input {
+    background-color: #5CE1E6;
+    color: black;
+    border: none;
+    padding: 7px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.material-icons{
+    color: #2b2b2e;
+}
+
+#category{
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+       width: 100%;
+    }
+}
+
+   
+.filter-container .btn {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.filter-container .btn:hover {
+    background-color: #ddd;
+}
+
+.filter-container .btn.active {
+    background-color: #0097B2;
+    color: white;
+    border: 2px solid #0097B2;
+}
+
+.title{
+    padding: 30px;
+}
+
+option{
+    padding: 30px;
+}

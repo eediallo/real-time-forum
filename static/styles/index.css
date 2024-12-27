@@ -1,0 +1,141 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body, html {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: white;
+    color: black;
+    padding: 0px;
+    height: 100%;
+    margin: 0;
+}
+
+/* Header Styling */
+header {
+    width: 100%;
+    padding-top: 1%;
+    padding-bottom: 2%;
+    background-color:  white;
+    color: black;
+    text-align: center;
+
+        max-width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+}
+
+ header h1 {
+    margin-bottom: 0.5rem;
+    color: black;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: black;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* .main Content Styling */
+.main {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.main h2 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.welcome p {
+    margin-bottom: 1rem;
+}
+
+.recent-topics ul {
+    list-style: none;
+    padding: 0;
+}
+
+.recent-topics ul li {
+    margin-bottom: 0.5rem;
+}
+
+.recent-topics ul li a {
+    text-decoration: none;
+    color: #0097b2
+    ;
+}
+
+.recent-topics ul li a:hover {
+    text-decoration: underline;
+    color: #0c5764;
+}
+
+footer {
+    background: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .header {
+       width: 100%;
+       
+    }
+
+    .flex-container {
+       flex-direction: column;
+       padding: 10px;
+    }
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto 10px;
+}
+
+.flex-box {
+    flex: 1;
+    margin: 10px;
+    text-align: center;
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.flex-box img {
+    width: 250px;
+    height: 250px;
+    /* display: block; */
+    margin: 0 auto;
+    border-radius: 8px;
+}
