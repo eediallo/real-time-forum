@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -35,7 +36,8 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	onlineUsers, err := fetchOnlineUsers()
+	users, err := fetchOnlineUsers()
+	log.Printf("%v", users)
 	if err != nil {
 		log.Printf("Error retrieving online users : %s", err.Error())
 		ErrorPageHandler(w, "Error retrieving online users", http.StatusInternalServerError)
@@ -55,9 +57,9 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 		IsAuthenticated:      isAuthenticated,
 		LikeDislikeCommentJS: likeDislikeCommentJsPath,
 		FilterJS:             filterJsPath,
-		WS: wsPath,
-		OnlineUsers: onlineUsers,
-		PrivateMessageJS: privateMessageJS,
+		WS:                   wsPath,
+		OnlineUsers:          users,
+		PrivateMessageJS:     privateMessageJS,
 	}
 
 	RenderTemplate(w, "dashboard", data)
@@ -121,21 +123,22 @@ func fetchComments(postID int) ([]Comment, error) {
 	return comments, nil
 }
 
-// fetchOnlineUsers retrieves the list of online users from the database.
-func fetchOnlineUsers() ([]string, error) {
-	rows, err := db.DB.Query("SELECT username FROM User WHERE is_online = 1")
+func fetchOnlineUsers() ([]db.User, error) {
+	rows, err := db.DB.Query("SELECT UserID, Username, is_online, LastMessage FROM User WHERE is_online = 1")
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	var users []string
+	var users []db.User
 	for rows.Next() {
-		var username string
-		if err := rows.Scan(&username); err != nil {
+		var user db.User
+		var lastMessage sql.NullString
+		if err := rows.Scan(&user.UserID, &user.Username, &user.IsOnline, &lastMessage); err != nil {
 			return nil, err
 		}
-		users = append(users, username)
+		user.LastMessage = lastMessage.String
+		users = append(users, user)
 	}
 
 	return users, nil
