@@ -8,34 +8,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// var upgrader = websocket.Upgrader{
-// 	CheckOrigin: func(r *http.Request) bool {
-// 		return true
-// 	},
-// }
-
-// func wsEndpoint(w http.ResponseWriter, r *http.Request) {
-// 	conn, err := upgrader.Upgrade(w, r, nil)
-// 	if err != nil {
-// 		http.Error(w, "Could not open websocket connection", http.StatusBadRequest)
-// 		return
-// 	}
-// 	defer conn.Close()
-
-// 	for {
-// 		// Read message from browser
-// 		msgType, msg, err := conn.ReadMessage()
-// 		if err != nil {
-// 			return
-// 		}
-
-// 		// Write message back to browser
-// 		if err = conn.WriteMessage(msgType, msg); err != nil {
-// 			return
-// 		}
-// 	}
-// }
-
 func RunServer() (*http.Server, error) {
 	r := mux.NewRouter()
 
