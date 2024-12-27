@@ -25,13 +25,13 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 			errorMessage += "Password is required. "
 		}
 
-		var(
+		var (
 			storedHash string
-			userID int
-			username string
+			userID     int
+			username   string
 		)
 
-		err := db.DB.QueryRow(userByEmailQuery, email, nickName).Scan(&storedHash, &userID, &nickName,  &username )
+		err := db.DB.QueryRow(userByEmailQuery, email, nickName).Scan(&storedHash, &userID, &nickName, &username)
 		if err != nil {
 			if err == sql.ErrNoRows {
 				ErrorPageHandler(w, "User not found", nil)

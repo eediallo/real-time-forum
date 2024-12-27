@@ -1,61 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{.CSSHomePage}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{.LogoCSS}}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{{.CSSHomePage}}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{.LogoCSS}}" />
+    <script src="{{.WS}}" defer></script>
     <title>Forum</title>
-</head>
-<body>
+  </head>
+  <body>
     <!-- this is the header section -->
     <header class="hearder">
-        <a href="{{.HomePath}}">
-            <img src="{{.Logo}}" alt="forum logo" class="logo">
-        </a>
-        <nav>
-            <ul> 
-                <li><a href="/users/login">Login</a></li>
-                <li><a href="/users/sign_up">Sign up</a></li>
-                <li><a href="#">About Us</a></li>
-            </ul>
-        </nav>
+      <a href="{{.HomePath}}">
+        <img src="{{.Logo}}" alt="forum logo" class="logo" />
+      </a>
+      <nav>
+        <ul>
+          <li><a href="/users/login">Login</a></li>
+          <li><a href="/users/sign_up">Sign up</a></li>
+          <li><a href="#">About Us</a></li>
+        </ul>
+      </nav>
     </header>
 
     <!-- categories section -->
     <div class="main">
-        <div class="welcome">
-            <h2>Welcome to the Forum!</h2>
-            <p>Share your coding experiences, ask for advice, and connect with fellows.</p>
-        </div>
-        <div class="recent-topics">
-            <h2>Categories</h2>
-            <ul>
-                <li><a href="{{.GolangOfficialPage}}">GOLANG</a></li>
-                <li><a href="{{.JSOfficialPage}}">JAVASCRIPT</a></li>
-                <li><a href="{{.RustOfficialPage}}">RUST</a></li>
-            </ul>
-        </div>      
+      <div class="welcome">
+        <h2>Welcome to the Forum!</h2>
+        <p>
+          Share your coding experiences, ask for advice, and connect with
+          fellows.
+        </p>
+      </div>
+      <div class="recent-topics">
+        <h2>Categories</h2>
+        <ul>
+          <li><a href="{{.GolangOfficialPage}}">GOLANG</a></li>
+          <li><a href="{{.JSOfficialPage}}">JAVASCRIPT</a></li>
+          <li><a href="{{.RustOfficialPage}}">RUST</a></li>
+        </ul>
+      </div>
     </div>
 
     <!-- image categories section -->
     <div class="flex-container">
-        <div class="flex-box">
-            <a href="{{.GolangOfficialPage}}">
-            <img src="{{.GoIamge}}" alt="Golan logo">
-            </a>
-        </div>
-        <div class="flex-box">
-            <a href="{{.JSOfficialPage}}">
-            <img src="{{.JsImage}}" alt="JavaScript logo">
+      <div class="flex-box">
+        <a href="{{.GolangOfficialPage}}">
+          <img src="{{.GoIamge}}" alt="Golan logo" />
         </a>
-        </div>
-        <div class="flex-box">
-            <a href="{{.RustOfficialPage}}">
-            <img src="{{.RustImage}}" alt="Rust logo">
-            </a>   
-        </div>
+      </div>
+      <div class="flex-box">
+        <a href="{{.JSOfficialPage}}">
+          <img src="{{.JsImage}}" alt="JavaScript logo" />
+        </a>
+      </div>
+      <div class="flex-box">
+        <a href="{{.RustOfficialPage}}">
+          <img src="{{.RustImage}}" alt="Rust logo" />
+        </a>
+      </div>
     </div>
     {{template "footer.html" .}}
-</body>
+  </body>
 </html>
