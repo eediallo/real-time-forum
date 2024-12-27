@@ -76,12 +76,15 @@ const (
 
 	addUserDetailsQuery = `
 	INSERT INTO 
-		User 
-			(Username, 
+		User (
+			NickName,
+			Age,
+			Gender,
+			Username, 
 			Email, 
 			PasswordHash, 
-			RegistrationDate) 
-		VALUES (?, ?, ?, ?)`
+			RegistrationDate
+		) VALUES (?, ?, ?, ?, ?, ?, ?)`
 
 	insertCommentToDBQuery = `
 		INSERT INTO Comments (
