@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/abdoulcyf/forum/internal/db"
+	"github.com/eediallo/real_time_forum/internal/db"
 )
 
 type contextKey string

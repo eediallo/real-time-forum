@@ -3,8 +3,7 @@ package handler
 import (
 	"net/http"
 
-	"github.com/abdoulcyf/forum/internal/db"
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/eediallo/real_time_forum/internal/db"
 )
 
 func LogoutUser(w http.ResponseWriter, r *http.Request) {

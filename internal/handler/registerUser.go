@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/abdoulcyf/forum/internal/db"
-	"github.com/abdoulcyf/forum/internal/utils"
+	"github.com/eediallo/real_time_forum/internal/db"
+	"github.com/eediallo/real_time_forum/internal/utils"
 )
 
 func RegisterUser(w http.ResponseWriter, r *http.Request) {

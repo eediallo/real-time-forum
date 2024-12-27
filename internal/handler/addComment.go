@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/abdoulcyf/forum/internal/db"
+	"github.com/eediallo/real_time_forum/internal/db"
 )
 
 func AddComment(w http.ResponseWriter, req *http.Request) {

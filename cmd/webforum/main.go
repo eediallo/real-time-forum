@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 
-	"github.com/abdoulcyf/forum/internal/db"
-	"github.com/abdoulcyf/forum/internal/handler"
-	"github.com/abdoulcyf/forum/internal/servers"
+	"github.com/eediallo/real_time_forum/internal/db"
+	"github.com/eediallo/real_time_forum/internal/handler"
+	"github.com/eediallo/real_time_forum/internal/servers"
 )
 
 func main() {

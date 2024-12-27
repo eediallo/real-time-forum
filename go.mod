@@ -1,9 +1,9 @@
-module github.com/abdoulcyf/forum
+module github.com/eediallo/real_time_forum
 
-go 1.22.4
+go 1.23.4
 
 require (
 	github.com/gofrs/uuid v4.4.0+incompatible
-	github.com/mattn/go-sqlite3 v1.14.22
-	golang.org/x/crypto v0.25.0
+	github.com/mattn/go-sqlite3 v1.14.24
+	golang.org/x/crypto v0.31.0
 )

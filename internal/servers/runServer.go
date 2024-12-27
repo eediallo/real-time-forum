@@ -3,8 +3,8 @@ package servers
 import (
 	"net/http"
 
-	"github.com/abdoulcyf/forum/internal/handler"
-	"github.com/abdoulcyf/forum/internal/middleware"
+	"github.com/eediallo/real_time_forum/internal/handler"
+	"github.com/eediallo/real_time_forum/internal/middleware"
 )
 
 //

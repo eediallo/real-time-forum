@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/abdoulcyf/forum/internal/db"
-	"github.com/abdoulcyf/forum/internal/utils"
+	"github.com/eediallo/real_time_forum/internal/db"
+	"github.com/eediallo/real_time_forum/internal/utils"
 	"github.com/gofrs/uuid"
 )
 
