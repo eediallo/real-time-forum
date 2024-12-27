@@ -1,90 +1,138 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
 }
 
 .register-container {
-    background-color: #ffffff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-    display: center;
-    justify-content: center;
-    align-items: center; 
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  display: center;
+  justify-content: center;
+  align-items: center;
 }
 h1 {
-    text-align: center;
-    color: #333;
+  text-align: center;
+  color: #333;
 }
 form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 label {
-    margin-bottom: 0.5rem;
-    color: #666;
+  margin-bottom: 0.5rem;
+  color: #666;
 }
 
 input[type="email"],
-input[type="password"]{
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
+input[type="password"] {
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
 }
-input[type="username"] {
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
+
+#username {
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
 input[type="submit"] {
+  padding: 0.75rem;
+  background-color: #0097b2;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+input[type="nickName"] {
+  padding: 0.75rem;
+  background-color: #0097b2;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#age {
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+#nickName {
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+#gender {
     padding: 0.75rem;
-    background-color: #0097B2;
-    color: #ffffff;
-    border: none;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  }
+
+option {
+  padding: 0.75rem;
+  background-color: #0097b2;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
+
 input[type="submit"]:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 p {
-    text-align: center;
-    color: #666;
+  text-align: center;
+  color: #666;
 }
 p a {
-    color: #007BFF;
-    text-decoration: none;
+  color: #007bff;
+  text-decoration: none;
 }
 p a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 @media screen and (max-width: 768px) {
-    .header {
-       width: 100%;
-    }
+  .header {
+    width: 100%;
+  }
 }
 
 .logo {
-    width: 500px;
-    margin: 0px 0 20px 0;
-    padding: 0;
-    height: auto;
-    display: center;
-    justify-content: center;
-    align-items: center; 
+  width: 500px;
+  margin: 0px 0 20px 0;
+  padding: 0;
+  height: auto;
+  display: center;
+  justify-content: center;
+  align-items: center;
 }
