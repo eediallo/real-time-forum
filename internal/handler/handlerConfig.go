@@ -1,5 +1,7 @@
 package handler
 
+import "github.com/eediallo/real_time_forum/internal/db"
+
 type Post struct {
 	UserID       int
 	PostID       int
@@ -26,7 +28,6 @@ type Comment struct {
 }
 
 type PageData struct {
-	Username             string
 	HeaderCSS            string
 	CommentJS            string
 	DashboardCSS         string
@@ -51,7 +52,10 @@ type PageData struct {
 	LikeDislikeCommentJS string
 	FilterJS             string
 	WS string
+	PrivateMessageJS string
 	OnlineUsers []string
+	Users       []db.User
+	Username string
 }
 
 var (
@@ -75,6 +79,7 @@ var (
 	likeDislikeCommentJsPath = jsDir + "likeDislikeComment.js"
 	filterJsPath             = jsDir + "filter.js"
 	wsPath = jsDir + "ws.js"
+	privateMessageJS = jsDir + "privateMessage.js"
 
 	googleIcons = "https://fonts.googleapis.com/icon?family=Material+Icons"
 

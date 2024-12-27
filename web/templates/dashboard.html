@@ -11,6 +11,7 @@
     <script src="{{.LikeDislikeCommentJS}}" defer></script>
     <script src="{{.FilterJS}}" defer></script>
     <script src="{{.WS}}" defer></script>
+    <script src="{{.PrivateMessageJS}}" defer></script>
   </head>
 
   <body>
@@ -177,24 +178,32 @@
       </div>
     </div>
 
-    <script>
-      // JavaScript for chat functionality
-      document.querySelector('.chat-header').addEventListener('click', function() {
-        const chatContainer = document.querySelector('.chat-container');
-        chatContainer.classList.toggle('collapsed');
-      });
-
-      document.querySelector('#chat-send').addEventListener('click', function() {
-        const input = document.querySelector('#chat-input');
-        const message = input.value;
-        if (message.trim() !== '') {
-          const messages = document.querySelector('#chat-messages');
-          const newMessage = document.createElement('div');
-          newMessage.textContent = message;
-          messages.appendChild(newMessage);
-          input.value = '';
-        }
-      });
-    </script>
+    <!-- Private Messages Section -->
+    <div class="private-messages">
+      <h3>Private Messages</h3>
+      <div class="user-list">
+        <h4>Users</h4>
+        <ul id="user-list">
+          {{range .Users}}
+          <li data-username="{{.Username}}" class="{{if .Online}}online{{else}}offline{{end}}">
+            {{.Username}}
+            <span class="last-message">{{.LastMessage}}</span>
+          </li>
+          {{else}}
+          <li>No users available</li>
+          {{end}}
+        </ul>
+      </div>
+      <div class="chat-box">
+        <div class="chat-header">
+          <h4 id="chat-with">Chat with: <span id="chat-username"></span></h4>
+        </div>
+        <div class="chat-messages" id="private-chat-messages"></div>
+        <div class="chat-input">
+          <input type="text" id="private-chat-input" placeholder="Type a message..." />
+          <button id="private-chat-send">Send</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

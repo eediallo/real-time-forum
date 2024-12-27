@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS User (
     Username TEXT NOT NULL UNIQUE,
     Email TEXT NOT NULL,
     PasswordHash TEXT NOT NULL,
-    RegistrationDate DATETIME NOT NULL
+    RegistrationDate DATETIME NOT NULL,
+    is_online BOOLEAN DEFAULT 0  -- Added to track online status
 );
 
 CREATE TABLE IF NOT EXISTS Post (
@@ -48,10 +49,27 @@ CREATE TABLE IF NOT EXISTS LikeDislike (
     CHECK ((PostID IS NOT NULL AND CommentID IS NULL) OR (PostID IS NULL AND CommentID IS NOT NULL))
 );
 
-
 CREATE TABLE IF NOT EXISTS Session (
     SessionID TEXT PRIMARY KEY,
     UserID INTEGER,
     CreatedAt DATETIME NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID)
 );
+
+CREATE TABLE IF NOT EXISTS PrivateMessage (
+    SessionID TEXT PRIMARY KEY,
+    UserID INTEGER,
+    CreatedAt DATETIME NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES User(UserID)
+);
+
+CREATE TABLE IF NOT EXISTS PrivateMessages (
+    MessageID INTEGER PRIMARY KEY AUTOINCREMENT,
+    SenderID INTEGER,
+    ReceiverID INTEGER,
+    Content TEXT NOT NULL,
+    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (SenderID) REFERENCES User(UserID),
+    FOREIGN KEY (ReceiverID) REFERENCES User(UserID)
+);
+

@@ -57,6 +57,7 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 		FilterJS:             filterJsPath,
 		WS: wsPath,
 		OnlineUsers: onlineUsers,
+		PrivateMessageJS: privateMessageJS,
 	}
 
 	RenderTemplate(w, "dashboard", data)
