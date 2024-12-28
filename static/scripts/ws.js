@@ -93,3 +93,14 @@ function sendMessage() {
   document.querySelector(".message").value = "";
   console.log(jsonData, "<=====json data");
 }
+
+//layout change
+const postContainer = document.querySelector(".post-container");
+console.log(postContainer);
+postContainer.style.display = "none";
+
+// event to display post creator
+const whatOnYourMind = document.querySelector("#whatOnYourMind");
+whatOnYourMind.addEventListener("click", () => {
+  postContainer.style.display = "block";
+});
