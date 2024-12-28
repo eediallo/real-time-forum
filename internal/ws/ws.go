@@ -4,8 +4,14 @@ import (
 	"log"
 	"net/http"
 
+	"fmt"
+
 	"github.com/gorilla/websocket"
 )
+
+var wsChan = make(chan WsPayload)
+
+var clients = make(map[WebSocketConnection]string)
 
 var upgradeConnection = websocket.Upgrader{
 	ReadBufferSize:  1024,
@@ -43,8 +49,55 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 	var response WsJonResponse
 	response.Message = `<em><small>Connected to server</small><em>`
 
+	conn := WebSocketConnection{Conn: ws}
+	clients[conn] = ""
+
 	err = ws.WriteJSON(response)
 	if err != nil {
 		log.Println(err)
+	}
+
+	go ListenForWs((&conn))
+}
+
+func ListenForWs(conn *WebSocketConnection) {
+	defer func() {
+		if r := recover(); r != nil {
+			log.Println("Error", fmt.Sprintf("%v", r))
+		}
+	}()
+
+	var payload WsPayload
+	for {
+		err := conn.ReadJSON(&payload)
+		if err != nil {
+			// do nothing
+		} else {
+			payload.Conn = *conn
+			wsChan <- payload
+		}
+	}
+}
+
+func ListenToWsChannel() {
+	var response WsJonResponse
+
+	for {
+		e := <-wsChan
+
+		response.Action = "Got here"
+		response.Message = fmt.Sprintf("Some message, and action was %s", e.Action)
+		BroadCastToAll(response)
+	}
+}
+
+func BroadCastToAll(response WsJonResponse) {
+	for client := range clients {
+		err := client.WriteJSON(response)
+		if err != nil {
+			log.Println("Websocket err")
+			_ = client.Close()
+			delete(clients, client)
+		}
 	}
 }
