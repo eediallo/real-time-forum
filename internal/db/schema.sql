@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS User (
     Email TEXT NOT NULL,
     PasswordHash TEXT NOT NULL,
     RegistrationDate DATETIME NOT NULL,
-    is_online BOOLEAN DEFAULT 0  -- Added to track online status
+    is_online BOOLEAN DEFAULT 0,  -- Added to track online status,
+    LastMessage TEXT
 );
 
 CREATE TABLE IF NOT EXISTS Post (
