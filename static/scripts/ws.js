@@ -54,7 +54,7 @@ onlineUsers.forEach((onlineUser) => {
   });
 });
 
-function setupMessageInputListener(username) {
+function setupMessageInputListener() {
   const messageTextArea = document.querySelector(".message");
   messageTextArea.addEventListener("keydown", (e) => {
     if (e.code === "Enter") {
@@ -63,7 +63,7 @@ function setupMessageInputListener(username) {
         return false;
       }
       e.preventDefault();
-      sendMessage(username);
+      sendMessage();
     }
   });
 }
@@ -87,14 +87,15 @@ function createChatBox() {
   }
 }
 
-function sendMessage(username) {
+function sendMessage() {
   let jsonData = {
     action: "broadcast",
     message: document.querySelector(".message").value,
-    username: username,
+    username: document.querySelector("#user_name").textContent,
   };
   socket.send(JSON.stringify(jsonData));
   document.querySelector(".message").value = "";
+  document.querySelector("#user_name").textContent = "";
   console.log(jsonData, "<=====json data");
 }
 
