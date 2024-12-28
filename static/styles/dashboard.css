@@ -22,9 +22,9 @@ body {
   flex: 1;
   justify-content: space-evenly;
   overflow: hidden;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
-  align-content: flex-start;
+  align-content: center;
   align-items: baseline;
 }
 
@@ -234,4 +234,8 @@ option {
   outline: 1px solid silver;
   min-height: 160px;
   padding: 0.5em;
+}
+
+.dashboard-container h2 {
+  text-align: center;
 }
