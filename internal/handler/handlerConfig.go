@@ -51,11 +51,10 @@ type PageData struct {
 	LoginJS              string
 	LikeDislikeCommentJS string
 	FilterJS             string
-	WS string
-	PrivateMessageJS string
-	OnlineUsers []string
-	Users       []db.User
-	Username string
+	WS                   string
+	PrivateMessageJS     string
+	OnlineUsers          []db.User
+	Username             string
 }
 
 var (
@@ -78,8 +77,8 @@ var (
 	loginJSPath              = jsDir + "login.js"
 	likeDislikeCommentJsPath = jsDir + "likeDislikeComment.js"
 	filterJsPath             = jsDir + "filter.js"
-	wsPath = jsDir + "ws.js"
-	privateMessageJS = jsDir + "privateMessage.js"
+	wsPath                   = jsDir + "ws.js"
+	privateMessageJS         = jsDir + "privateMessage.js"
 
 	googleIcons = "https://fonts.googleapis.com/icon?family=Material+Icons"
 
