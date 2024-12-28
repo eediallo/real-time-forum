@@ -3,7 +3,6 @@ package ws
 import (
 	"log"
 	"net/http"
-	"sort"
 	"sync"
 
 	"fmt"
@@ -72,22 +71,32 @@ func ListenForWs(conn *WebSocketConnection) {
 		if r := recover(); r != nil {
 			log.Println("Error:", fmt.Sprintf("%v", r))
 		}
-		mu.Lock()
-		delete(clients, *conn)
-		mu.Unlock()
-		conn.Close()
 	}()
 
+	var payload WsPayload
+
 	for {
-		var payload WsPayload
 		err := conn.ReadJSON(&payload)
 		if err != nil {
-			log.Printf("ReadJSON error for client %v: %v", conn, err)
-			return
+			log.Println("ReadJSON error:", err)
+			break
 		}
+
 		payload.Conn = *conn
 		wsChan <- payload
 	}
+
+	mu.Lock()
+	delete(clients, *conn)
+	mu.Unlock()
+
+	updateUserStatusInDB(payload.Username, false)
+	users := getUserList()
+	response := WsJonResponse{
+		Action:         "list_users",
+		ConnectedUsers: users,
+	}
+	BroadCastToAll(response)
 }
 
 func ListenToWsChannel() {
@@ -98,9 +107,10 @@ func ListenToWsChannel() {
 		switch e.Action {
 		case "username":
 			mu.Lock()
-			clients[e.Conn] = e.User.Username
-			users := getUserList()
+			clients[e.Conn] = e.Username
 			mu.Unlock()
+			updateUserStatusInDB(e.Username, true)
+			users := getUserList()
 			response.Action = "list_users"
 			response.ConnectedUsers = users
 			BroadCastToAll(response)
@@ -108,31 +118,39 @@ func ListenToWsChannel() {
 		case "left":
 			mu.Lock()
 			delete(clients, e.Conn)
-			users := getUserList()
 			mu.Unlock()
+			updateUserStatusInDB(e.Username, false)
+			users := getUserList()
 			response.Action = "list_users"
 			response.ConnectedUsers = users
 			BroadCastToAll(response)
 
 		case "broadcast":
 			response.Action = "broadcast"
-			response.Message = fmt.Sprintf("<strong>%s</strong>: %s", e.User.Username, e.Message)
+			response.Message = fmt.Sprintf("<strong>%s</strong>: %s", e.Username, e.Message)
 			BroadCastToAll(response)
 		}
 	}
 }
 
 func getUserList() []string {
-	mu.Lock()
-	defer mu.Unlock()
-	var userList []string
-	for _, username := range clients {
-		if username != "" {
-			userList = append(userList, username)
-		}
+	var users []string
+	rows, err := db.DB.Query("SELECT username FROM User WHERE is_online = 1")
+	if err != nil {
+		fmt.Println("Error fetching users from database:", err)
+		return users
 	}
-	sort.Strings(userList)
-	return userList
+	defer rows.Close()
+
+	for rows.Next() {
+		var username string
+		if err := rows.Scan(&username); err != nil {
+			fmt.Println("Error scanning username:", err)
+			continue
+		}
+		users = append(users, username)
+	}
+	return users
 }
 
 func BroadCastToAll(response WsJonResponse) {
@@ -145,5 +163,12 @@ func BroadCastToAll(response WsJonResponse) {
 			_ = client.Close()
 			delete(clients, client)
 		}
+	}
+}
+
+func updateUserStatusInDB(username string, online bool) {
+	_, err := db.DB.Exec("UPDATE User SET is_online = ? WHERE username = ?", online, username)
+	if err != nil {
+		fmt.Println("Error updating user status in database:", err)
 	}
 }
