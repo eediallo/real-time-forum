@@ -44,7 +44,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 		http.Redirect(w, r, "/users/login", http.StatusSeeOther)
 	} else {
-		data := PageData{
+		data := db.PageData{
 			CssRegisterPath: cssRegisterPath,
 			HomePath:        homePagePath,
 			LogoCSS:         cssLogoPath,

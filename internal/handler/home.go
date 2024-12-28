@@ -2,6 +2,8 @@ package handler
 
 import (
 	"net/http"
+
+	"github.com/eediallo/real_time_forum/internal/db"
 )
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
@@ -10,7 +12,7 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := PageData{
+	data := db.PageData{
 		CSSHomePage:        indexCSS,
 		Logo:               logPath,
 		HomePath:           homePagePath,

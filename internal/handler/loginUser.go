@@ -86,7 +86,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := PageData{
+	data := db.PageData{
 		CssLoginPath: cssLoginPath,
 		Logo:         logPath,
 		HomePath:     homePagePath,

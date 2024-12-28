@@ -44,7 +44,7 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := PageData{
+	data := db.PageData{
 		Username:             username,
 		HeaderCSS:            headerCSS,
 		Posts:                posts,
@@ -66,16 +66,16 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 }
 
 // CreatePosts retrieves all posts from the database along with their associated comments.
-func fetchPosts() ([]Post, error) {
+func fetchPosts() ([]db.Post, error) {
 	postRows, err := db.DB.Query(postsWithDetailsQuery)
 	if err != nil {
 		return nil, err
 	}
 	defer postRows.Close()
 
-	var posts []Post
+	var posts []db.Post
 	for postRows.Next() {
-		var post Post
+		var post db.Post
 		err := postRows.Scan(&post.PostID, &post.Title, &post.Content, &post.CommentCount, &post.CreatedAt, &post.Category, &post.Username)
 		if err != nil {
 			return nil, err
@@ -103,16 +103,16 @@ func fetchPosts() ([]Post, error) {
 }
 
 // CreateComments retrieves all comments for a given post ID from the database.
-func fetchComments(postID int) ([]Comment, error) {
+func fetchComments(postID int) ([]db.Comment, error) {
 	commentRows, err := db.DB.Query(commentsFromDBQuery, postID)
 	if err != nil {
 		return nil, err
 	}
 	defer commentRows.Close()
 
-	var comments []Comment
+	var comments []db.Comment
 	for commentRows.Next() {
-		var comment Comment
+		var comment db.Comment
 		err := commentRows.Scan(&comment.CommentID, &comment.PostID, &comment.Content, &comment.LikeCount, &comment.DislikeCount, &comment.CreatedAt, &comment.Username)
 		if err != nil {
 			return nil, err
