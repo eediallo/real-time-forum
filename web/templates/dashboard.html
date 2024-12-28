@@ -184,8 +184,11 @@
       <div class="user-list">
         <h4>Users</h4>
         <ul id="user-list">
-          {{range .Users}}
-          <li data-username="{{.Username}}" class="{{if .Online}}online{{else}}offline{{end}}">
+          {{range .OnlineUsers}}
+          <li
+            data-username="{{.Username}}"
+            class="{{if .IsOnline}}online{{else}}offline{{end}}"
+          >
             {{.Username}}
             <span class="last-message">{{.LastMessage}}</span>
           </li>
@@ -200,7 +203,11 @@
         </div>
         <div class="chat-messages" id="private-chat-messages"></div>
         <div class="chat-input">
-          <input type="text" id="private-chat-input" placeholder="Type a message..." />
+          <input
+            type="text"
+            id="private-chat-input"
+            placeholder="Type a message..."
+          />
           <button id="private-chat-send">Send</button>
         </div>
       </div>
