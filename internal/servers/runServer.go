@@ -16,7 +16,6 @@ func RunServer() (*http.Server, error) {
 	r.HandleFunc("/", handler.HomePage)
 	r.HandleFunc("/users/sign_up", handler.RegisterUser)
 	r.HandleFunc("/users/login", handler.LoginUser)
-	// r.HandleFunc("/dashboard", handler.DashboardPage)
 
 	// WebSocket route
 	r.HandleFunc("/ws", ws.WsEndpoint)
