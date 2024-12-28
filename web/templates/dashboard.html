@@ -17,7 +17,7 @@
   <body>
     <!-- Header -->
     {{template "header.html" .}}
-    <h1 class="welcome">Welcome to WebForum {{.Username}}!</h1>
+    <h1 class="welcome">Welcome to WebForum <span id="user_name">{{.Username}}</span></h1>
     <div class="dashboard-container">
       <!-- Middle Content Area -->
       <div class="post-container">
@@ -146,6 +146,7 @@
         {{end}}
       </div>
 
+      
       <!-- Post Filter Buttons -->
       <div class="filter-container">
         <h3>Filter posts by categories</h3>
@@ -161,48 +162,14 @@
       <h3>Online Users</h3>
       <ul>
         {{range .OnlineUsers}}
-        <li>{{.Username}}</li>
+        <li class="online-user">{{.Username}}</li>
         {{else}}
         <li>No users online</li>
         {{end}}
       </ul>
     </div>
 
-    <!-- Private Messages Section -->
-    <div class="private-messages">
-      <h3>Private Messages</h3>
-      <div class="user-list">
-        <h4>Users</h4>
-        <ul id="user-list">
-          {{range .OnlineUsers}}
-          <li
-            data-username="{{.Username}}"
-            class="{{if .IsOnline}}online{{else}}offline{{end}}"
-          >
-            {{.Username}}
-            <span class="last-message">{{.LastMessage}}</span>
-          </li>
-          {{else}}
-          <li>No users available</li>
-          {{end}}
-        </ul>
-      </div>
-      <div class="chat-box">
-        <div class="chat-header">
-          <h4 id="chat-with">Chat with: <span id="chat-username"></span></h4>
-        </div>
-        <div class="chat-messages" id="private-chat-messages"></div>
-        <div class="chat-input">
-          <input
-            type="text"
-            id="private-chat-input"
-            placeholder="Type a message..."
-          />
-          <button id="private-chat-send">Send</button>
-        </div>
-      </div>
-
-      <div id="chat-box-output"></div>
+    <div class="chat-messages"></div>
     </div>
   </body>
 </html>
