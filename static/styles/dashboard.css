@@ -32,14 +32,6 @@ body {
   margin-bottom: 20px;
 }
 
-.post {
-  margin-left: 100px;
-  /* flex: 1; */
-  background-color: #fff;
-  justify-content: center;
-  flex-direction: center;
-  align-items: center;
-}
 
 .comments {
   display: none;
@@ -69,7 +61,7 @@ body {
     width: 100%;
   }
   .dashboard-container {
-    width: 100%;
+    width: 70%;
     display: block;
     margin: auto;
     text-align: center;
@@ -238,4 +230,11 @@ option {
 
 .dashboard-container h2 {
   text-align: center;
+}
+
+.posts {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
