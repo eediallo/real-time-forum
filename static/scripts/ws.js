@@ -1,18 +1,20 @@
 const chatMessages = document.querySelector(".chat-messages");
 
 let socket = null;
+
 window.onbeforeunload = () => {
-  console.log("leaving.......");
-  let jsonData = {};
-  jsonData["action"] = "left";
-  socket.send(JSON.stringify(jsonData));
+  if (socket) {
+    console.log("leaving.......");
+    let jsonData = { action: "left" };
+    socket.send(JSON.stringify(jsonData));
+  }
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  socket = new WebSocket("ws://127.0.0:8080/ws");
+  socket = new WebSocket("ws://127.0.0.1:8080/ws");
 
   socket.onopen = () => {
-    console.log("Successully connected");
+    console.log("Successfully connected");
   };
 
   socket.onclose = () => {
@@ -20,17 +22,23 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   socket.onerror = (error) => {
-    console.log("there was an error");
+    console.error("WebSocket error:", error);
   };
 
   socket.onmessage = (msg) => {
-    let data = JSON.parse(msg.data);
-    let jsonData = {};
-    jsonData["action"] = "username";
-    socket.send(JSON.stringify(jsonData));
+    let data;
+    try {
+      data = JSON.parse(msg.data);
+    } catch (e) {
+      console.error("Error parsing JSON:", e);
+      return;
+    }
     switch (data.action) {
       case "broadcast":
-        chatMessages.innerHTML = chatMessages.innerHTML + data.message + "<br>";
+        chatMessages.innerHTML += `${data.message}<br>`;
+        break;
+      case "list_users":
+        updateOnlineUsers(data.connected_users);
         break;
     }
   };
@@ -50,11 +58,10 @@ function setupMessageInputListener() {
   messageTextArea.addEventListener("keydown", (e) => {
     if (e.code === "Enter") {
       if (!socket) {
-        console.log("no connection");
+        console.log("No connection");
         return false;
       }
       e.preventDefault();
-      e.stopPropagation();
       sendMessage();
     }
   });
@@ -67,7 +74,7 @@ function createChatBox() {
     chatBox.classList.add("chat-box");
     const chatBoxInput = document.createElement("input");
     chatBoxInput.classList.add("message");
-    chatBoxInput.type = "textArea";
+    chatBoxInput.type = "text";
     chatBoxInput.placeholder = "Enter your message";
     const sendBtn = document.createElement("button");
     sendBtn.classList.add("sentMsgBtn");
@@ -80,13 +87,15 @@ function createChatBox() {
 }
 
 function sendMessage() {
-  let jsonData = {};
-  jsonData["action"] = "broadcast";
-  onlineUsers.forEach((onlineUser) => {
-    jsonData["username"] = onlineUser.textContent;
-  });
-  jsonData["message"] = document.querySelector(".message").value;
+  let jsonData = {
+    action: "broadcast",
+    message: document.querySelector(".message").value
+  };
   socket.send(JSON.stringify(jsonData));
   document.querySelector(".message").value = "";
   console.log(jsonData, "<=====json data");
+}
+
+function updateOnlineUsers(users) {
+  // Update the online users list in the UI
 }
