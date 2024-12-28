@@ -34,9 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     switch (data.action) {
-      // case "list_users":
-      //   updateOnlineUsers(data.users);
-      //   break;
       case "broadcast":
         chatMessages.innerHTML += `${data.message}<br>`;
         break;
@@ -48,7 +45,6 @@ const onlineUsers = document.querySelectorAll(".online-user");
 
 onlineUsers.forEach((onlineUser) => {
   onlineUser.addEventListener("click", () => {
-    // updateOnlineUsers();
     createChatBox();
     setupMessageInputListener(onlineUser.textContent);
   });
@@ -97,15 +93,3 @@ function sendMessage() {
   document.querySelector(".message").value = "";
   console.log(jsonData, "<=====json data");
 }
-
-// function updateOnlineUsers() {
-//   let connectedUsers = [];
-//   users.forEach((onlineUser) =>
-//     connectedUsers.push(onlineUser.textContent)
-//   );
-//   jsonData = {
-//     users: connectedUsers,
-//   };
-
-//   socket.send(JSON.stringify(jsonData));
-// }
