@@ -34,11 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     switch (data.action) {
+      case "list_users":
+        updateOnlineUsers(data.users);
+        break;
       case "broadcast":
         chatMessages.innerHTML += `${data.message}<br>`;
-        break;
-      case "list_users":
-        updateOnlineUsers(data.connected_users);
         break;
     }
   };
@@ -48,12 +48,13 @@ const onlineUsers = document.querySelectorAll(".online-user");
 
 onlineUsers.forEach((onlineUser) => {
   onlineUser.addEventListener("click", () => {
+    updateOnlineUsers();
     createChatBox();
-    setupMessageInputListener();
+    setupMessageInputListener(onlineUser.textContent);
   });
 });
 
-function setupMessageInputListener() {
+function setupMessageInputListener(username) {
   const messageTextArea = document.querySelector(".message");
   messageTextArea.addEventListener("keydown", (e) => {
     if (e.code === "Enter") {
@@ -62,7 +63,7 @@ function setupMessageInputListener() {
         return false;
       }
       e.preventDefault();
-      sendMessage();
+      sendMessage(username);
     }
   });
 }
@@ -86,10 +87,11 @@ function createChatBox() {
   }
 }
 
-function sendMessage() {
+function sendMessage(username) {
   let jsonData = {
     action: "broadcast",
-    message: document.querySelector(".message").value
+    message: document.querySelector(".message").value,
+    username: username,
   };
   socket.send(JSON.stringify(jsonData));
   document.querySelector(".message").value = "";
@@ -98,4 +100,15 @@ function sendMessage() {
 
 function updateOnlineUsers(users) {
   // Update the online users list in the UI
+  let connectedUsers = [];
+  onlineUsers.forEach((onlineUser) =>
+    connectedUsers.push(onlineUser.textContent)
+  );
+  console.log(connectedUsers, "<---connectedUSers");
+
+  jsonData = {
+    users: connectedUsers,
+  };
+
+  socket.send(JSON.stringify(jsonData));
 }
