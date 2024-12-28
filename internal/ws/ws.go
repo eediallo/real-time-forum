@@ -13,11 +13,22 @@ var upgradeConnection = websocket.Upgrader{
 	CheckOrigin:     func(r *http.Request) bool { return true },
 }
 
+type WebSocketConnection struct {
+	*websocket.Conn
+}
+
 // WsJonResponse define the response sent back from the websocket
 type WsJonResponse struct {
 	Action      string `json:"action"`
 	Message     string `json:"message"`
 	MessageType string `json:"message_type"`
+}
+
+type WsPayload struct {
+	Action   string              `json:"action"`
+	Username string              `json:"username"`
+	Message  string              `json:"message"`
+	Conn     WebSocketConnection `json:"-"`
 }
 
 // WsEndpoint upgrade connection to websocket
