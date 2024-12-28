@@ -1,3 +1,5 @@
+const chatMessages = document.querySelector(".chat-messages");
+
 let socket = null;
 window.onbeforeunload = () => {
   console.log("leaving.......");
@@ -22,18 +24,13 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   socket.onmessage = (msg) => {
-    // console.log(msg);
-    // let j = JSON.parse(msg.data);
-    // console.log(j);
-
     let data = JSON.parse(msg.data);
-    console.log("Action is ", data.action);
     let jsonData = {};
     jsonData["action"] = "username";
     socket.send(JSON.stringify(jsonData));
-
     switch (data.action) {
-      case "list_users":
+      case "broadcast":
+        chatMessages.innerHTML = chatMessages.innerHTML + data.message + "<br>";
         break;
     }
   };
@@ -42,19 +39,34 @@ document.addEventListener("DOMContentLoaded", () => {
 const onlineUsers = document.querySelectorAll(".online-user");
 
 onlineUsers.forEach((onlineUser) => {
-  console.log(onlineUser, "<---online user");
   onlineUser.addEventListener("click", () => {
-    console.log(`User name: ${onlineUser.textContent} clicked...........`);
-    chatBox();
+    createChatBox();
+    setupMessageInputListener();
   });
 });
 
-function chatBox() {
+function setupMessageInputListener() {
+  const messageTextArea = document.querySelector(".message");
+  messageTextArea.addEventListener("keydown", (e) => {
+    if (e.code === "Enter") {
+      if (!socket) {
+        console.log("no connection");
+        return false;
+      }
+      e.preventDefault();
+      e.stopPropagation();
+      sendMessage();
+    }
+  });
+}
+
+function createChatBox() {
   if (!document.querySelector(".chat-box")) {
     const chatBoxCard = document.createElement("section");
     const chatBox = document.createElement("div");
     chatBox.classList.add("chat-box");
     const chatBoxInput = document.createElement("input");
+    chatBoxInput.classList.add("message");
     chatBoxInput.type = "textArea";
     chatBoxInput.placeholder = "Enter your message";
     const sendBtn = document.createElement("button");
@@ -67,42 +79,14 @@ function chatBox() {
   }
 }
 
-// <!-- Private Messages Section -->
-// <div class="private-messages">
-//   <h3>Private Messages</h3>
-//   <div class="user-list">
-//     <h4>Users</h4>
-//     <ul id="user-list">
-//       {{range .OnlineUsers}}
-//       <li
-//         data-username="{{.Username}}"
-//         class="{{if .IsOnline}}online{{else}}offline{{end}}"
-//       >
-//         {{.Username}}
-//         <span class="last-message">{{.LastMessage}}</span>
-//       </li>
-//       {{else}}
-//       <li>No users available</li>
-//       {{end}}
-//     </ul>
-//   </div>
-
-{
-  /* <div class="chat-box">
-        <div class="chat-header">
-          <h4 id="chat-with">Chat with: <span id="chat-username"></span></h4>
-        </div>
-        <div class="chat-messages" id="private-chat-messages"></div>
-        <div class="chat-input">
-          <input
-            type="text"
-            id="private-chat-input"
-            placeholder="Type a message..."
-          />
-          <button id="private-chat-send">Send</button>
-        </div>
-      </div>
-
-
-      <div id="chat-box-output"></div> */
+function sendMessage() {
+  let jsonData = {};
+  jsonData["action"] = "broadcast";
+  onlineUsers.forEach((onlineUser) => {
+    jsonData["username"] = onlineUser.textContent;
+  });
+  jsonData["message"] = document.querySelector(".message").value;
+  socket.send(JSON.stringify(jsonData));
+  document.querySelector(".message").value = "";
+  console.log(jsonData, "<=====json data");
 }
