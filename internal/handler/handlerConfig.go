@@ -32,10 +32,6 @@ var (
 	goOfficialPagePath   = "https://go.dev/"
 	jsOfficialPagePath   = "https://www.javascript.com/"
 	rustOfficialPagePath = "https://www.rust-lang.org/"
-
-	// status code
-
-	onlineUsers = []string{}
 )
 
 type StatT = uint8
