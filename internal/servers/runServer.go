@@ -16,7 +16,7 @@ func RunServer() (*http.Server, error) {
 	r.HandleFunc("/", handler.HomePage)
 	r.HandleFunc("/users/sign_up", handler.RegisterUser)
 	r.HandleFunc("/users/login", handler.LoginUser)
-	r.HandleFunc("/dashboard", handler.DashboardPage)
+	// r.HandleFunc("/dashboard", handler.DashboardPage)
 
 	// WebSocket route
 	r.HandleFunc("/ws", ws.WsEndpoint)
@@ -26,6 +26,7 @@ func RunServer() (*http.Server, error) {
 	r.Handle("/profile", middleware.AuthMiddleware(http.HandlerFunc(handler.ProfilePage)))
 	r.Handle("/post", middleware.AuthMiddleware(http.HandlerFunc(handler.PostHandler)))
 	r.Handle("/add_comment", middleware.AuthMiddleware(http.HandlerFunc(handler.AddComment)))
+	r.Handle("/dashboard", middleware.AuthMiddleware(http.HandlerFunc(handler.DashboardPage)))
 	r.Handle("/like", middleware.AuthMiddleware(http.HandlerFunc(handler.LikePostHandler)))
 	r.Handle("/dislike", middleware.AuthMiddleware(http.HandlerFunc(handler.DislikePostHandler)))
 	r.Handle("/like_dislike_comment", middleware.AuthMiddleware(http.HandlerFunc(handler.LikeDislikeCommentHandler)))
