@@ -34,9 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     switch (data.action) {
-      case "list_users":
-        updateOnlineUsers(data.users);
-        break;
+      // case "list_users":
+      //   updateOnlineUsers(data.users);
+      //   break;
       case "broadcast":
         chatMessages.innerHTML += `${data.message}<br>`;
         break;
@@ -48,7 +48,7 @@ const onlineUsers = document.querySelectorAll(".online-user");
 
 onlineUsers.forEach((onlineUser) => {
   onlineUser.addEventListener("click", () => {
-    updateOnlineUsers();
+    // updateOnlineUsers();
     createChatBox();
     setupMessageInputListener(onlineUser.textContent);
   });
@@ -95,21 +95,17 @@ function sendMessage() {
   };
   socket.send(JSON.stringify(jsonData));
   document.querySelector(".message").value = "";
-  document.querySelector("#user_name").textContent = "";
   console.log(jsonData, "<=====json data");
 }
 
-function updateOnlineUsers(users) {
-  // Update the online users list in the UI
-  let connectedUsers = [];
-  onlineUsers.forEach((onlineUser) =>
-    connectedUsers.push(onlineUser.textContent)
-  );
-  console.log(connectedUsers, "<---connectedUSers");
+// function updateOnlineUsers() {
+//   let connectedUsers = [];
+//   users.forEach((onlineUser) =>
+//     connectedUsers.push(onlineUser.textContent)
+//   );
+//   jsonData = {
+//     users: connectedUsers,
+//   };
 
-  jsonData = {
-    users: connectedUsers,
-  };
-
-  socket.send(JSON.stringify(jsonData));
-}
+//   socket.send(JSON.stringify(jsonData));
+// }
