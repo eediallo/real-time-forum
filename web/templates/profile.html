@@ -10,6 +10,22 @@
     {{template "header.html" .}}
     <h1>Welcome, {{.Username}}</h1>
     <p>This is your profile page.</p>
+
+        <!-- User Details -->
+    <div class="user-details">
+        {{range .OnlineUsers}}
+         <p class="firstName"><strong>First Name:</strong> {{.FirstName}}</p>
+         <p class="lastName"><strong>Last Name:</strong> {{.LastName}}</p>
+        <p class="nickName"><strong>Nickname:</strong> {{.NickName}}</p>
+        <p class="age"><strong>Age:</strong> {{.Age}}</p>
+        <p class="gender"><strong>Gender:</strong> {{.Gender}}</p>
+        <p class="email"><strong>Email:</strong> {{.Email}}</p>
+        <p class="join"><strong>Join:</strong> {{.RegistrationDate}}</p>
+        <p class="online-user">{{.Username}}</p>
+        {{end}}
+      </ul>
+    </div>
+
     <a href="/dashboard">Back to Dashboard</a>
 </body>
 </html>
