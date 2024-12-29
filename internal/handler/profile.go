@@ -41,14 +41,21 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 
 	log.Println("Logged in user:", username)
 
-	data := struct {
-		HomePath        string
-		Logo            string
-		IsAuthenticated bool
-		Username        string
-		HeaderCSS       string
-	}{HomePath: homePagePath, Logo: logPath, IsAuthenticated: isAuthenticated, Username: username, HeaderCSS: headerCSS}
-	log.Printf("header css %s\n", data.HeaderCSS)
+	users, err := fetchOnlineUsers()
+	log.Printf("%v", users)
+	if err != nil {
+		log.Printf("Error retrieving online users : %s", err.Error())
+		ErrorPageHandler(w, "Error retrieving online users", http.StatusInternalServerError)
+		return
+	}
 
+	data := db.PageData{
+		HomePath:        homePagePath,
+		Logo:            logPath,
+		IsAuthenticated: isAuthenticated,
+		Username:        username,
+		HeaderCSS:       headerCSS,
+		OnlineUsers:     users,
+	}
 	RenderTemplate(w, "profile", data)
 }
