@@ -31,4 +31,5 @@ type PageData struct {
 	Username             string
 	SignUpCoverImage     string
 	ProfileCSS           string
+	MainJS               string
 }

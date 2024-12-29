@@ -96,41 +96,10 @@ function sendMessage() {
 
 //layout change
 const postContainer = document.querySelector(".post-container");
-console.log(postContainer);
 postContainer.style.display = "none";
 
 // event to display post creator
 const whatOnYourMind = document.querySelector("#whatOnYourMind");
 whatOnYourMind.addEventListener("click", () => {
   postContainer.style.display = "block";
-});
-
-// ==============search feature====================
-const state = {
-  searchTerm: "",
-  filteredTerms: [],
-};
-
-const searchInput = document.querySelector("#search");
-searchInput.addEventListener("input", (e) => {
-  state.searchTerm = e.target.value.toLowerCase();
-  const posts = document.querySelectorAll(".post");
-
-  posts.forEach((post) => {
-    const title = post.querySelector("h3").textContent.toLowerCase();
-    const descriptions = post.querySelectorAll("p");
-    let descriptionText = "";
-    descriptions.forEach((desc) => {
-      descriptionText += desc.textContent.toLowerCase() + " ";
-    });
-
-    if (
-      title.includes(state.searchTerm) ||
-      descriptionText.includes(state.searchTerm)
-    ) {
-      post.style.display = "block";
-    } else {
-      post.style.display = "none";
-    }
-  });
 });
