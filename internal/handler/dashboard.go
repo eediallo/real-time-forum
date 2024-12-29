@@ -35,7 +35,7 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	users, err := fetchOnlineUsers()
+	users, err := fetchAllUsers()
 	log.Printf("%v", users)
 	if err != nil {
 		log.Printf("Error retrieving online users : %s", err.Error())
@@ -57,7 +57,7 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 		LikeDislikeCommentJS: likeDislikeCommentJsPath,
 		FilterJS:             filterJsPath,
 		WS:                   wsPath,
-		OnlineUsers:          users,
+		Users:                users,
 		PrivateMessageJS:     privateMessageJS,
 		MainJS:               mainjs,
 	}
@@ -123,8 +123,8 @@ func fetchComments(postID int) ([]db.Comment, error) {
 	return comments, nil
 }
 
-func fetchOnlineUsers() ([]db.User, error) {
-	rows, err := db.DB.Query("SELECT UserID, NickName, Age, FirstName, LastName, Gender, Username, Email, RegistrationDate, is_online FROM User WHERE is_online = 1")
+func fetchAllUsers() ([]db.User, error) {
+	rows, err := db.DB.Query("SELECT UserID, NickName, Age, FirstName, LastName, Gender, Username, Email, RegistrationDate, is_online FROM User WHERE is_online = 1 OR is_online = 0")
 	if err != nil {
 		return nil, err
 	}

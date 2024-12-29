@@ -167,17 +167,24 @@
 
   <!-- ==================================== -->
   <div class="right-side">
-  <!-- Online Users Section -->
-<div class="online-users">
-  <h3>Online Users</h3>
-  <ul>
-    {{range .OnlineUsers}}
-    <li class="online-user">{{.Username}}</li>
-    {{else}}
-    <li>No users online</li>
-    {{end}}
-  </ul>
-</div>
+    <!-- Online Users Section -->
+    <div class="online-users">
+      <h3>Users</h3>
+      <ul>
+        {{range .Users}}
+        <li class="user">
+          {{.Username}} - 
+          {{if .IsOnline}}
+          <span class="status online">Online</span>
+          {{else}}
+          <span class="status offline">Offline</span>
+          {{end}}
+        </li>
+        {{else}}
+        <li>No users online</li>
+        {{end}}
+      </ul>
+    </div>
   </div>
 
    <!-- ==================================== -->

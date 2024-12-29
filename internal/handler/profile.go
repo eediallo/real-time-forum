@@ -41,7 +41,7 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 
 	log.Println("Logged in user:", username)
 
-	users, err := fetchOnlineUsers()
+	users, err := fetchAllUsers()
 	log.Printf("%v", users)
 	if err != nil {
 		log.Printf("Error retrieving online users : %s", err.Error())
@@ -55,7 +55,7 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 		IsAuthenticated: isAuthenticated,
 		Username:        username,
 		HeaderCSS:       headerCSS,
-		OnlineUsers:     users,
+		Users:     users,
 		ProfileCSS:      profilecss,
 	}
 	RenderTemplate(w, "profile", data)
