@@ -281,3 +281,9 @@ option {
   flex-direction: column;
   align-items: center;
 }
+
+.post {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
