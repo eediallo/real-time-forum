@@ -56,6 +56,7 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 		Username:        username,
 		HeaderCSS:       headerCSS,
 		OnlineUsers:     users,
+		ProfileCSS:      profilecss,
 	}
 	RenderTemplate(w, "profile", data)
 }
