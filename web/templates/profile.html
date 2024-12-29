@@ -10,17 +10,15 @@
   <body>
     {{template "header.html" .}}
     <div class="user-details">
-      {{range .OnlineUsers}}
-      <h1>{{.FirstName}} {{.LastName}}</h1>
-      <p class="firstName"><strong>First Name:</strong> {{.FirstName}}</p>
-      <p class="lastName"><strong>Last Name:</strong> {{.LastName}}</p>
-      <p class="nickName"><strong>Nickname:</strong> {{.NickName}}</p>
-      <p class="username"><strong>Username:</strong> {{.Username}}</p>
-      <p class="age"><strong>Age:</strong> {{.Age}}</p>
-      <p class="gender"><strong>Gender:</strong> {{.Gender}}</p>
-      <p class="email"><strong>Email:</strong> {{.Email}}</p>
-      <p class="join"><strong>Joined:</strong> {{.RegistrationDate}}</p>
-      {{end}}
+      <h1>{{.User.FirstName}} {{.User.LastName}}</h1>
+      <p class="firstName"><strong>First Name:</strong> {{.User.FirstName}}</p>
+      <p class="lastName"><strong>Last Name:</strong> {{.User.LastName}}</p>
+      <p class="nickName"><strong>Nickname:</strong> {{.User.NickName}}</p>
+      <p class="username"><strong>Username:</strong> {{.User.Username}}</p>
+      <p class="age"><strong>Age:</strong> {{.User.Age}}</p>
+      <p class="gender"><strong>Gender:</strong> {{.User.Gender}}</p>
+      <p class="email"><strong>Email:</strong> {{.User.Email}}</p>
+      <p class="join"><strong>Joined:</strong> {{.User.RegistrationDate}}</p>
     </div>
     <a href="/dashboard">Back to Dashboard</a>
   </body>

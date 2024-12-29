@@ -27,9 +27,10 @@ type PageData struct {
 	FilterJS             string
 	WS                   string
 	PrivateMessageJS     string
-	Users          []User
+	Users                []User
 	Username             string
 	SignUpCoverImage     string
 	ProfileCSS           string
 	MainJS               string
+	User                 User
 }

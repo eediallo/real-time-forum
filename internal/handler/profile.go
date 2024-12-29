@@ -20,9 +20,11 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 	}
 
 	var username string
+	var userID int
 	query := `
 		SELECT
-				u.Username
+				u.Username,
+				u.UserID
 			FROM 
 				Session AS s
 			INNER JOIN
@@ -32,7 +34,7 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 			WHERE 
 				SessionID = ?`
 
-	err = db.DB.QueryRow(query, cookie.Value).Scan(&username)
+	err = db.DB.QueryRow(query, cookie.Value).Scan(&username, &userID)
 	if err != nil {
 		log.Println("Session not found or expired:", err)
 		http.Redirect(w, req, "/users/login", http.StatusSeeOther)
@@ -41,8 +43,8 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 
 	log.Println("Logged in user:", username)
 
-	users, err := fetchAllUsers()
-	log.Printf("%v", users)
+	user, err := getUser(userID)
+	log.Printf("%v", user)
 	if err != nil {
 		log.Printf("Error retrieving online users : %s", err.Error())
 		ErrorPageHandler(w, "Error retrieving online users", http.StatusInternalServerError)
@@ -55,8 +57,20 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 		IsAuthenticated: isAuthenticated,
 		Username:        username,
 		HeaderCSS:       headerCSS,
-		Users:     users,
+		User:            user,
 		ProfileCSS:      profilecss,
 	}
 	RenderTemplate(w, "profile", data)
+}
+
+func getUser(userID int) (db.User, error) {
+	query := "SELECT UserID, NickName, Age, FirstName, LastName, Gender, Username, Email, RegistrationDate, is_online FROM User WHERE UserID = ?"
+	row := db.DB.QueryRow(query, userID)
+
+	var user db.User
+	if err := row.Scan(&user.UserID, &user.NickName, &user.Age, &user.FirstName, &user.LastName, &user.Gender, &user.Username, &user.Email, &user.RegistrationDate, &user.IsOnline); err != nil {
+		return db.User{}, err
+	}
+
+	return user, nil
 }
