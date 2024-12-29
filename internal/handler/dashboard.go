@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -9,7 +8,6 @@ import (
 )
 
 // DashboardPage handles the retrieval of posts and their comments and renders the dashboard page.
-// If the user is logged in, it shows the username; otherwise, it displays the page without user-specific data.
 func DashboardPage(w http.ResponseWriter, r *http.Request) {
 	var username string
 	var userID int
@@ -28,15 +26,14 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	posts, err := fetchPosts()
+	posts, err := db.FetchPosts()
 	if err != nil {
 		log.Printf("Error retrieving posts : %s", err.Error())
 		ErrorPageHandler(w, "Error retrieving posts", http.StatusInternalServerError)
 		return
 	}
 
-	users, err := fetchAllUsers()
-	log.Printf("%v", users)
+	users, err := db.FetchAllUsers()
 	if err != nil {
 		log.Printf("Error retrieving online users : %s", err.Error())
 		ErrorPageHandler(w, "Error retrieving online users", http.StatusInternalServerError)
@@ -63,81 +60,4 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	RenderTemplate(w, "dashboard", data)
-}
-
-// CreatePosts retrieves all posts from the database along with their associated comments.
-func fetchPosts() ([]db.Post, error) {
-	postRows, err := db.DB.Query(postsWithDetailsQuery)
-	if err != nil {
-		return nil, err
-	}
-	defer postRows.Close()
-
-	var posts []db.Post
-	for postRows.Next() {
-		var post db.Post
-		err := postRows.Scan(&post.PostID, &post.Title, &post.Content, &post.CommentCount, &post.CreatedAt, &post.Category, &post.Username)
-		if err != nil {
-			return nil, err
-		}
-
-		// Fetch like and dislike counts for the post
-		post.LikeCount, post.DislikeCount, _ = getLikeDislikeCounts(post.PostID)
-
-		comments, err := fetchComments(post.PostID)
-		if err != nil {
-			return nil, fmt.Errorf("error copying colums into row ---CreatePosts--%s", err.Error())
-		}
-
-		// Fetch comment count for the post
-		err = db.DB.QueryRow("SELECT COUNT(*) FROM comments WHERE PostID = ?", post.PostID).Scan(&post.CommentCount)
-		if err != nil {
-			return nil, err
-		}
-
-		post.Comments = comments
-		posts = append(posts, post)
-	}
-
-	return posts, nil
-}
-
-// CreateComments retrieves all comments for a given post ID from the database.
-func fetchComments(postID int) ([]db.Comment, error) {
-	commentRows, err := db.DB.Query(commentsFromDBQuery, postID)
-	if err != nil {
-		return nil, err
-	}
-	defer commentRows.Close()
-
-	var comments []db.Comment
-	for commentRows.Next() {
-		var comment db.Comment
-		err := commentRows.Scan(&comment.CommentID, &comment.PostID, &comment.Content, &comment.LikeCount, &comment.DislikeCount, &comment.CreatedAt, &comment.Username)
-		if err != nil {
-			return nil, err
-		}
-		comments = append(comments, comment)
-	}
-
-	return comments, nil
-}
-
-func fetchAllUsers() ([]db.User, error) {
-	rows, err := db.DB.Query("SELECT UserID, NickName, Age, FirstName, LastName, Gender, Username, Email, RegistrationDate, is_online FROM User WHERE is_online = 1 OR is_online = 0")
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	var users []db.User
-	for rows.Next() {
-		var user db.User
-		if err := rows.Scan(&user.UserID, &user.NickName, &user.Age, &user.FirstName, &user.LastName, &user.Gender, &user.Username, &user.Email, &user.RegistrationDate, &user.IsOnline); err != nil {
-			return nil, err
-		}
-		users = append(users, user)
-	}
-
-	return users, nil
 }
