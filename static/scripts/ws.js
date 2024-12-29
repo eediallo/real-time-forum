@@ -1,5 +1,3 @@
-const chatMessages = document.querySelector(".chat-messages");
-
 let socket = null;
 
 window.onbeforeunload = () => {
@@ -35,23 +33,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     switch (data.action) {
       case "broadcast":
+        const chatMessages = document.querySelector(".chatMessages");
         chatMessages.innerHTML += `${data.message}<br>`;
         break;
     }
   };
 });
 
-const onlineUsers = document.querySelectorAll(".online-user");
+// const onlineUsers = document.querySelectorAll(".online-user");
 
-onlineUsers.forEach((onlineUser) => {
-  onlineUser.addEventListener("click", () => {
-    createChatBox();
-    setupMessageInputListener(onlineUser.textContent);
-  });
-});
+// onlineUsers.forEach((onlineUser) => {
+//   onlineUser.addEventListener("click", () => {
+//     createChatBox();
+//     setupMessageInputListener(onlineUser.textContent);
+//   });
+// });
 
-function setupMessageInputListener() {
-  const messageTextArea = document.querySelector(".message");
+function setupMessageInputListener(username) {
+  const messageTextArea = document.querySelector("#chatInput");
   messageTextArea.addEventListener("keydown", (e) => {
     if (e.code === "Enter") {
       if (!socket) {
@@ -59,38 +58,38 @@ function setupMessageInputListener() {
         return false;
       }
       e.preventDefault();
-      sendMessage();
+      sendMessage(username);
     }
   });
 }
 
-function createChatBox() {
-  if (!document.querySelector(".chat-box")) {
-    const chatBoxCard = document.createElement("section");
-    const chatBox = document.createElement("div");
-    chatBox.classList.add("chat-box");
-    const chatBoxInput = document.createElement("input");
-    chatBoxInput.classList.add("message");
-    chatBoxInput.type = "text";
-    chatBoxInput.placeholder = "Enter your message";
-    const sendBtn = document.createElement("button");
-    sendBtn.classList.add("sentMsgBtn");
-    sendBtn.textContent = "Send";
-    chatBox.append(chatBoxInput, sendBtn);
-    chatBoxCard.append(chatBox);
+// function createChatBox() {
+//   if (!document.querySelector(".chat-box")) {
+//     const chatBoxCard = document.createElement("section");
+//     const chatBox = document.createElement("div");
+//     chatBox.classList.add("chat-box");
+//     const chatBoxInput = document.createElement("input");
+//     chatBoxInput.classList.add("message");
+//     chatBoxInput.type = "text";
+//     chatBoxInput.placeholder = "Enter your message";
+//     const sendBtn = document.createElement("button");
+//     sendBtn.classList.add("sentMsgBtn");
+//     sendBtn.textContent = "Send";
+//     chatBox.append(chatBoxInput, sendBtn);
+//     chatBoxCard.append(chatBox);
 
-    document.body.appendChild(chatBoxCard);
-  }
-}
+//     document.body.appendChild(chatBoxCard);
+//   }
+// }
 
-function sendMessage() {
+function sendMessage(username) {
   let jsonData = {
     action: "broadcast",
-    message: document.querySelector(".message").value,
-    username: document.querySelector("#user_name").textContent,
+    message: document.querySelector("#chatInput").value,
+    username: username,
   };
   socket.send(JSON.stringify(jsonData));
-  document.querySelector(".message").value = "";
+  document.querySelector("#chatInput").value = "";
   console.log(jsonData, "<=====json data");
 }
 
@@ -103,3 +102,5 @@ const whatOnYourMind = document.querySelector("#whatOnYourMind");
 whatOnYourMind.addEventListener("click", () => {
   postContainer.style.display = "block";
 });
+
+export { setupMessageInputListener };
