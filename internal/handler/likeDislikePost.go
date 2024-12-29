@@ -56,7 +56,7 @@ func handleLikeDislike(w http.ResponseWriter, r *http.Request, isLike bool) {
 	}
 
 	// Respond with the updated like/dislike counts
-	likeCount, dislikeCount, err := getLikeDislikeCounts(postID)
+	likeCount, dislikeCount, err := db.GetLikeDislikeCounts(postID)
 	if err != nil {
 		http.Error(w, "Database error", http.StatusInternalServerError)
 		return
@@ -78,17 +78,4 @@ func getUserIDFromSession(r *http.Request) (int, error) {
 	}
 
 	return userID, nil
-}
-
-func getLikeDislikeCounts(postID int) (int, int, error) {
-	var likeCount, dislikeCount int
-	err := db.DB.QueryRow("SELECT COUNT(*) FROM LikeDislike WHERE PostID = ? AND IsLike = 1", postID).Scan(&likeCount)
-	if err != nil {
-		return 0, 0, err
-	}
-	err = db.DB.QueryRow("SELECT COUNT(*) FROM LikeDislike WHERE PostID = ? AND IsLike = 0", postID).Scan(&dislikeCount)
-	if err != nil {
-		return 0, 0, err
-	}
-	return likeCount, dislikeCount, nil
 }
