@@ -10,6 +10,7 @@ var (
 	dashboardCSS    = styleDir + "dashboard.css"
 	cssRegisterPath = styleDir + "register.css"
 	cssLogoPath     = styleDir + "logo.css"
+	profilecss      = styleDir + "profile.css"
 
 	imagesDir            = "/static/images/"
 	logPath              = imagesDir + "forum_logo.png"

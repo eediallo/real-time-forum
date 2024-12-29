@@ -30,4 +30,5 @@ type PageData struct {
 	OnlineUsers          []User
 	Username             string
 	SignUpCoverImage     string
+	ProfileCSS           string
 }

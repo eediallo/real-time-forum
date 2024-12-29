@@ -1,0 +1,64 @@
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
+}
+
+p {
+  color: #555;
+  line-height: 1.6;
+}
+
+/* User details section */
+.user-details {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.user-details p {
+  margin: 10px 0;
+}
+
+.user-details p strong {
+  color: #333;
+}
+
+.user-details .firstName,
+.user-details .lastName,
+.user-details .nickName,
+.user-details .age,
+.user-details .gender,
+.user-details .email,
+.user-details .join,
+.user-details .online-user {
+  font-size: 16px;
+}
+
+/* Back to Dashboard link */
+a[href="/dashboard"] {
+  display: block;
+  text-align: center;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  width: 200px;
+}
+
+a[href="/dashboard"]:hover {
+  background-color: #0056b3;
+}
