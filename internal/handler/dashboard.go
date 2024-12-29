@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
@@ -124,7 +123,7 @@ func fetchComments(postID int) ([]db.Comment, error) {
 }
 
 func fetchOnlineUsers() ([]db.User, error) {
-	rows, err := db.DB.Query("SELECT UserID, Username, is_online, LastMessage FROM User WHERE is_online = 1")
+	rows, err := db.DB.Query("SELECT UserID, NickName, Age, FirstName, LastName, Gender, Username, Email, RegistrationDate, is_online FROM User WHERE is_online = 1")
 	if err != nil {
 		return nil, err
 	}
@@ -133,11 +132,9 @@ func fetchOnlineUsers() ([]db.User, error) {
 	var users []db.User
 	for rows.Next() {
 		var user db.User
-		var lastMessage sql.NullString
-		if err := rows.Scan(&user.UserID, &user.Username, &user.IsOnline, &lastMessage); err != nil {
+		if err := rows.Scan(&user.UserID, &user.NickName, &user.Age, &user.FirstName, &user.LastName, &user.Gender, &user.Username, &user.Email, &user.RegistrationDate, &user.IsOnline); err != nil {
 			return nil, err
 		}
-		user.LastMessage = lastMessage.String
 		users = append(users, user)
 	}
 
