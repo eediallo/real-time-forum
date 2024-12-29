@@ -3,18 +3,19 @@ import { createUserProfile } from "./chat/createUserPro.js";
 import { middlePart, leftSide } from "./chat/config.js";
 import { setupMessageInputListener } from "./ws/inputInitializer.js";
 
-let user = "";
+let userReceivingMsg = "";
+const userTextingMsg = document.querySelector(".username").textContent;
 let chatBoxCreated = false;
 
 function initiateChatWithUser(onlineUser) {
   let indexOfDash = onlineUser.textContent.indexOf("-");
-  user = onlineUser.textContent.slice(0, indexOfDash);
+  userReceivingMsg = onlineUser.textContent.slice(0, indexOfDash);
   middlePart.innerHTML = ""; // clear middle section
   leftSide.innerHTML = "";
   if (!chatBoxCreated) {
-    createMessageChatBox(user);
-    createUserProfile(user);
-    setupMessageInputListener(user);
+    createMessageChatBox(userReceivingMsg);
+    createUserProfile(userReceivingMsg);
+    setupMessageInputListener(userTextingMsg);
     chatBoxCreated = false;
   }
 }
