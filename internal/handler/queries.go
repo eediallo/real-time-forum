@@ -86,7 +86,7 @@ const (
 			Email, 
 			PasswordHash, 
 			RegistrationDate
-		) VALUES (?, ?, ?, ?, ?, ?, ?)`
+		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
 	insertCommentToDBQuery = `
 		INSERT INTO Comments (
