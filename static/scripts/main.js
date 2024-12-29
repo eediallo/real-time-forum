@@ -12,19 +12,25 @@ const middlePart = document.querySelector(".middle-part");
 const leftSide = document.querySelector(".left-side");
 let user = "";
 
+let chatBoxCreated = false;
+
 onliUsers.forEach((onlineUser) =>
   onlineUser.addEventListener("click", (e) => {
     let indexOfDash = onlineUser.textContent.indexOf("-");
-    user += onlineUser.textContent.slice(0, indexOfDash);
-    middlePart.innerHTML = ""; // clear midlle section
+    user = onlineUser.textContent.slice(0, indexOfDash);
+    middlePart.innerHTML = ""; // clear middle section
     leftSide.innerHTML = "";
-    createMessageChatBox(user);
-    createUserProfile(user);
+    if (!chatBoxCreated) {
+      createMessageChatBox(user);
+      createUserProfile(user);
+      chatBoxCreated = false;
+    }
   })
 );
 
 function createMessageChatBox(username) {
   const messageChatBox = document.createElement("section");
+  messageChatBox.classList.add(".messageChatBox");
   const user = document.createElement("h2");
   user.textContent = username;
   const chatDescription = document.createElement("p");
@@ -34,8 +40,10 @@ function createMessageChatBox(username) {
   chatInput.type = "text";
   chatInput.name = "chatInput";
   chatInput.id = "chatInput";
+  chatInput.placeholder = `Message @${username}`;
 
   messageChatBox.append(user, chatDescription, chatInput);
+
   middlePart.append(messageChatBox);
 }
 
