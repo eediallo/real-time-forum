@@ -24,6 +24,7 @@ var (
 	filterJsPath             = jsDir + "filter.js"
 	wsPath                   = jsDir + "ws.js"
 	privateMessageJS         = jsDir + "privateMessage.js"
+	mainjs                   = jsDir + "main.js"
 
 	googleIcons = "https://fonts.googleapis.com/icon?family=Material+Icons"
 
