@@ -1,7 +1,7 @@
 import { createMessageChatBox } from "./chat/createChatMsg.js";
 import { createUserProfile } from "./chat/createUserPro.js";
 import { middlePart, leftSide } from "./chat/config.js";
-import { setupMessageInputListener } from "./ws.js";
+import { setupMessageInputListener } from "./ws/inputInitializer.js";
 
 let user = "";
 let chatBoxCreated = false;
