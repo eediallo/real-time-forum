@@ -79,6 +79,8 @@ const (
 		User (
 			NickName,
 			Age,
+			FirstName,
+			LastName,
 			Gender,
 			Username, 
 			Email, 
