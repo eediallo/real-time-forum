@@ -21,7 +21,7 @@
     <div class="dashboard-container">
 
  <!-- ==================================== -->
-    <div class="letf-side">
+    <div class="left-side">
     <!-- Post Filter Buttons -->
 <div class="filter-container">
   <h3>Filter posts by categories</h3>
@@ -76,7 +76,7 @@
         <div class="post">
           <h3>{{.Title}}</h3>
           <p>{{.Content}}</p>
-            <p>Posted by: <strong><em>{{.Username}}</em></strong> on: <small>{{.CreatedAt}}</small></p>
+            <p>Posted by: <span class="username"><strong><em>{{.Username}}</em></strong></span> on: <small>{{.CreatedAt}}</small></p>
           <p>Category: <span class="category">{{.Category}}</span></p>
 
           {{if .MediaPath}} {{if (or (eq (ext .MediaPath) ".jpg") (eq (ext
@@ -172,7 +172,7 @@
       <h3>Users</h3>
       <ul>
         {{range .Users}}
-        <li class="user">
+        <li class="user {{if .IsOnline}}online{{else}}offline{{end}}">
           {{.Username}} - 
           {{if .IsOnline}}
           <span class="status-online">Online</span>

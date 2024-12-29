@@ -3,7 +3,7 @@ const state = {
   filteredTerms: [],
 };
 
-function searchInputHandler(e) {
+function searchFilter(e) {
   state.searchTerm = e.target.value.toLowerCase();
   const posts = document.querySelectorAll(".post");
 
@@ -26,4 +26,4 @@ function searchInputHandler(e) {
   });
 }
 
-export { searchInputHandler };
+export { searchFilter };
