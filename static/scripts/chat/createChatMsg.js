@@ -8,13 +8,16 @@ function createMessageChatBox(username) {
   const chatDescription = document.createElement("p");
   chatDescription.textContent = `This is the beginning of your direct message history with ${username}`;
 
+  const chatMessages = document.createElement("div");
+  chatMessages.classList.add("chatMessages");
+
   const chatInput = document.createElement("input");
   chatInput.type = "text";
   chatInput.name = "chatInput";
   chatInput.id = "chatInput";
   chatInput.placeholder = `Message @${username}`;
 
-  messageChatBox.append(user, chatDescription, chatInput);
+  messageChatBox.append(user, chatDescription, chatMessages, chatInput);
 
   middlePart.append(messageChatBox);
 }
