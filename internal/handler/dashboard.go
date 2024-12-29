@@ -5,25 +5,17 @@ import (
 	"net/http"
 
 	"github.com/eediallo/real_time_forum/internal/db"
+	"github.com/eediallo/real_time_forum/internal/middleware"
 )
 
 // DashboardPage handles the retrieval of posts and their comments and renders the dashboard page.
 func DashboardPage(w http.ResponseWriter, r *http.Request) {
-	var username string
-	var userID int
-	isAuthenticated := false
 
 	// Try to retrieve the session ID from the cookie
-	cookie, err := r.Cookie("session_id")
-	if err == nil {
-		err = db.DB.QueryRow(sessionIDfromCookieQuery, cookie.Value).Scan(&userID, &username)
-		isAuthenticated = true
-		if err != nil {
-			log.Printf("Session not found or expired in dashboard : %s", err.Error())
-			ErrorPageHandler(w, "Session not found or expired:", nil)
-			username = ""
-			return
-		}
+	username, isAuthenticated, errAuth := middleware.CheckUserAuthentication(r)
+	if errAuth != nil {
+		log.Printf("Error authenticanting user : %s", errAuth.Error())
+		return
 	}
 
 	posts, err := db.FetchPosts()
