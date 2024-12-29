@@ -76,7 +76,7 @@
         <div class="post">
           <h3>{{.Title}}</h3>
           <p>{{.Content}}</p>
-          <p><small>Posted by: {{.Username}} on: {{.CreatedAt}}</small></p>
+            <p>Posted by: <strong><em>{{.Username}}</em></strong> on: <small>{{.CreatedAt}}</small></p>
           <p>Category: <span class="category">{{.Category}}</span></p>
 
           {{if .MediaPath}} {{if (or (eq (ext .MediaPath) ".jpg") (eq (ext
