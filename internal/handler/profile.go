@@ -9,6 +9,9 @@ import (
 
 // ProfilePage renders the user's profile page.
 func ProfilePage(w http.ResponseWriter, req *http.Request) {
+
+	isAuthenticated := true
+
 	cookie, err := req.Cookie("session_id")
 	if err != nil {
 		log.Println("No session_id cookie found:", err)
@@ -17,7 +20,19 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 	}
 
 	var username string
-	err = db.DB.QueryRow("SELECT Username FROM Session WHERE SessionID = ?", cookie.Value).Scan(&username)
+	query := `
+		SELECT
+				u.Username
+			FROM 
+				Session AS s
+			INNER JOIN
+				User AS u
+			ON
+				s.UserID = u.UserID
+			WHERE 
+				SessionID = ?`
+
+	err = db.DB.QueryRow(query, cookie.Value).Scan(&username)
 	if err != nil {
 		log.Println("Session not found or expired:", err)
 		http.Redirect(w, req, "/users/login", http.StatusSeeOther)
@@ -27,9 +42,13 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 	log.Println("Logged in user:", username)
 
 	data := struct {
-		Username  string
-		HeaderCSS string
-	}{Username: username, HeaderCSS: headerCSS}
+		HomePath        string
+		Logo            string
+		IsAuthenticated bool
+		Username        string
+		HeaderCSS       string
+	}{HomePath: homePagePath, Logo: logPath, IsAuthenticated: isAuthenticated, Username: username, HeaderCSS: headerCSS}
+	log.Printf("header css %s\n", data.HeaderCSS)
 
 	RenderTemplate(w, "profile", data)
 }
