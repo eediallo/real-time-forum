@@ -9,14 +9,17 @@ function main() {
 const onliUsers = document.querySelectorAll(".online");
 const dashboardContainer = document.querySelector(".dashboard-container");
 const middlePart = document.querySelector(".middle-part");
+const leftSide = document.querySelector(".left-side");
 let user = "";
 
 onliUsers.forEach((onlineUser) =>
   onlineUser.addEventListener("click", (e) => {
     let indexOfDash = onlineUser.textContent.indexOf("-");
     user += onlineUser.textContent.slice(0, indexOfDash);
-    middlePart.innerHTML = ""; // clear dashboard container
+    middlePart.innerHTML = ""; // clear midlle section
+    leftSide.innerHTML = "";
     createMessageChatBox(user);
+    createUserProfile(user);
   })
 );
 
@@ -34,6 +37,19 @@ function createMessageChatBox(username) {
 
   messageChatBox.append(user, chatDescription, chatInput);
   middlePart.append(messageChatBox);
+}
+
+function createUserProfile(username) {
+  const profileSection = document.createElement("section");
+  const user = document.createElement("h2");
+  user.textContent = username;
+  const userProfile = `http://localhost:8080/users/${username}`;
+  const a = document.createElement("a");
+  a.textContent = `${username}#`;
+  a.setAttribute("href", userProfile);
+
+  profileSection.append(user, a);
+  leftSide.append(profileSection);
 }
 
 window.onload = main;
