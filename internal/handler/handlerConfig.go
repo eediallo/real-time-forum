@@ -11,8 +11,9 @@ var (
 	cssRegisterPath = styleDir + "register.css"
 	cssLogoPath     = styleDir + "logo.css"
 
-	imagesDir = "/static/images/"
-	logPath   = imagesDir + "forum_logo.png"
+	imagesDir            = "/static/images/"
+	logPath              = imagesDir + "forum_logo.png"
+	signUpCoverImagePath = imagesDir + "sign-up.avif"
 
 	jsDir                    = "/static/scripts/"
 	commentJS                = jsDir + "comments.js"

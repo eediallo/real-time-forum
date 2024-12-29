@@ -13,6 +13,8 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 		username := r.FormValue("username")
 		nickName := r.FormValue("nickName")
 		age := r.FormValue("age")
+		firstName := r.FormValue("firstName")
+		lastName := r.FormValue("lastName")
 		gender := r.FormValue("gender")
 		email := r.FormValue("email")
 		password := r.FormValue("password")
@@ -36,7 +38,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		_, err = db.DB.Exec(addUserDetailsQuery, nickName, age, gender, username, email, hashedPassword, registrationDate)
+		_, err = db.DB.Exec(addUserDetailsQuery, nickName, age, firstName, lastName, gender, username, email, hashedPassword, registrationDate)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -49,6 +51,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 			HomePath:        homePagePath,
 			LogoCSS:         cssLogoPath,
 			Logo:            logPath,
+			SignUpCoverImage: signUpCoverImagePath,
 		}
 		RenderTemplate(w, "register", data)
 	}
