@@ -29,4 +29,5 @@ type PageData struct {
 	PrivateMessageJS     string
 	OnlineUsers          []User
 	Username             string
+	SignUpCoverImage     string
 }
