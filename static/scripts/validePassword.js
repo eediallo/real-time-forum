@@ -1,6 +1,6 @@
 const addChars = /['!""#$%&"()*,-./]/g;
 
-function validatePassword(password) {
+function validPassword(password) {
   if (typeof password !== "string") {
     throw new Error("Password must be a string.");
   }
@@ -26,4 +26,4 @@ function validatePassword(password) {
   return true;
 }
 
-module.exports = validatePassword;
+module.exports = validPassword;
