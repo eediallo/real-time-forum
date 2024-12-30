@@ -48,7 +48,7 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 	log.Println("Logged in user:", loggedInUsername)
 
 	// Fetch the profile for the requested username
-	user, err := getUserByUsername(profileUsername)
+	user, err := db.GetUserByUsername(profileUsername)
 	if err != nil {
 		log.Printf("Error retrieving user profile for username '%s': %s", profileUsername, err.Error())
 		ErrorPageHandler(w, "User not found", http.StatusNotFound)
@@ -66,23 +66,4 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 		ProfileCSS:      profilecss,
 	}
 	RenderTemplate(w, "profile", data)
-}
-
-func getUserByUsername(username string) (db.User, error) {
-	query := `
-        SELECT 
-            UserID, NickName, Age, FirstName, LastName, Gender, Username, Email, RegistrationDate, is_online
-        FROM 
-            User 
-        WHERE 
-            Username = ?`
-
-	row := db.DB.QueryRow(query, username)
-
-	var user db.User
-	if err := row.Scan(&user.UserID, &user.NickName, &user.Age, &user.FirstName, &user.LastName, &user.Gender, &user.Username, &user.Email, &user.RegistrationDate, &user.IsOnline); err != nil {
-		return db.User{}, err
-	}
-
-	return user, nil
 }
