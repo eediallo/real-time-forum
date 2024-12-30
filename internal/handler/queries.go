@@ -58,6 +58,18 @@ const (
 			CreatedAt
 		) VALUES (?, ?, ?, ?)
 	`
+	getUserBySessionIDQuery = `
+        SELECT
+            u.Username,
+            u.UserID
+        FROM 
+            Session AS s
+        INNER JOIN
+            User AS u
+        ON
+            s.UserID = u.UserID
+        WHERE 
+            SessionID = ?`
 )
 
 const (
