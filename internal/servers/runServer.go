@@ -22,7 +22,7 @@ func RunServer() (*http.Server, error) {
 
 	// Protected routes
 	r.Handle("/users/logout", middleware.AuthMiddleware(http.HandlerFunc(handler.LogoutUser)))
-	r.Handle("/users/{{.Username}}", middleware.AuthMiddleware(http.HandlerFunc(handler.ProfilePage)))
+	r.Handle("/users/{username}", middleware.AuthMiddleware(http.HandlerFunc(handler.ProfilePage))).Methods("GET")
 	r.Handle("/post", middleware.AuthMiddleware(http.HandlerFunc(handler.PostHandler)))
 	r.Handle("/add_comment", middleware.AuthMiddleware(http.HandlerFunc(handler.AddComment)))
 	r.Handle("/dashboard", middleware.AuthMiddleware(http.HandlerFunc(handler.DashboardPage)))
