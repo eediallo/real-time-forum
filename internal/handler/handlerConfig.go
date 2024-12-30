@@ -25,6 +25,7 @@ var (
 	wsPath                   = jsDir + "ws/ws.js"
 	privateMessageJS         = jsDir + "privateMessage.js"
 	mainjs                   = jsDir + "main.js"
+	validatePasswordJS       = jsDir + "validatePassword.js"
 
 	googleIcons = "https://fonts.googleapis.com/icon?family=Material+Icons"
 

@@ -26,4 +26,5 @@ function validPassword(password) {
   return true;
 }
 
-module.exports = validPassword;
+export { validPassword };
+//module.exports = validPassword;

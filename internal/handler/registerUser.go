@@ -47,11 +47,12 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/users/login", http.StatusSeeOther)
 	} else {
 		data := db.PageData{
-			CssRegisterPath: cssRegisterPath,
-			HomePath:        homePagePath,
-			LogoCSS:         cssLogoPath,
-			Logo:            logPath,
-			SignUpCoverImage: signUpCoverImagePath,
+			CssRegisterPath:    cssRegisterPath,
+			HomePath:           homePagePath,
+			LogoCSS:            cssLogoPath,
+			Logo:               logPath,
+			SignUpCoverImage:   signUpCoverImagePath,
+			ValidatePasswordJS: validatePasswordJS,
 		}
 		RenderTemplate(w, "register", data)
 	}

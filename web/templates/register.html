@@ -6,6 +6,7 @@
     <title>Sign up</title>
     <link rel="stylesheet" href="{{.CssRegisterPath}}" />
     <link rel="stylesheet" href="{{.LogoCSS}}" />
+    <script type="module" src="{{.ValidatePasswordJS}}" defer></script>
   </head>
 
   <body>
@@ -40,24 +41,18 @@
           <label for="password">Password:</label>
           <input type="password" id="password" name="password" required /><br />
 
-          <input type="submit" value="Sign Up" />
+          <input id="signUpBtn" type="submit" value="Sign Up" />
         </form>
         <p>Already registered? <a href="/users/login">Login here</a></p>
+        <div id="error-message" class="error-message">{{.ErrorMessage}}</div>
       </div>
 
       <div class="sign-up-cover-image">
-      <div class="logo-container">
-        <a href="{{.HomePath}}">
-          <img src="{{.Logo}}" alt="Return to Home Page" class="logo" />
-        </a>
-      </div>
-        {{/*
-        <img
-          src="{{.SignUpCoverImage}}"
-          alt="sign up cover image"
-          class="sign-up-cover"
-        />
-        */}}
+        <div class="logo-container">
+          <a href="{{.HomePath}}">
+            <img src="{{.Logo}}" alt="Return to Home Page" class="logo" />
+          </a>
+        </div>
       </div>
     </div>
   </body>

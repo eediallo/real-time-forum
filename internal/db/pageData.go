@@ -33,4 +33,5 @@ type PageData struct {
 	ProfileCSS           string
 	MainJS               string
 	User                 User
+	ValidatePasswordJS   string
 }
