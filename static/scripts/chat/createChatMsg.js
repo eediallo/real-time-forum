@@ -11,14 +11,17 @@ function createMessageChatBox(username) {
   const chatMessages = document.createElement("div");
   chatMessages.classList.add("chatMessages");
   const chatForm = document.createElement("form");
-  chatForm.method = "post";
 
   const chatInput = document.createElement("input");
   chatInput.type = "text";
   chatInput.name = "chatInput";
   chatInput.id = "chatInput";
   chatInput.placeholder = `Message @${username}`;
-  chatForm.append(chatInput);
+
+  const submit = document.createElement("input");
+  submit.type = "submit";
+  submit.value = "Send";
+  chatForm.append(chatInput, submit);
 
   messageChatBox.append(user, chatDescription, chatMessages, chatForm);
 
