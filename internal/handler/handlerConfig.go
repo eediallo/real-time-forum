@@ -22,7 +22,7 @@ var (
 	loginJSPath              = jsDir + "login.js"
 	likeDislikeCommentJsPath = jsDir + "likeDislikeComment.js"
 	filterJsPath             = jsDir + "filter.js"
-	wsPath                   = jsDir + "ws.js"
+	wsPath                   = jsDir + "ws/ws.js"
 	privateMessageJS         = jsDir + "privateMessage.js"
 	mainjs                   = jsDir + "main.js"
 
