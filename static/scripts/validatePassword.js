@@ -11,6 +11,7 @@ function validatePassword(event) {
     if (!validPassword(password)) {
       event.preventDefault();
       errorMsgEl.innerHTML = errorMessage;
+      errorMsgEl.style.color = "red";
     } else {
       errorMsgEl.innerHTML = ""; // Clear the error message if the password is valid
       console.log("Password Accepted.");
@@ -20,6 +21,7 @@ function validatePassword(event) {
     console.error("invalid password", error.message);
     event.preventDefault();
     errorMsgEl.innerHTML = error.message;
+    errorMsgEl.style.color = "red";
   }
 }
 
