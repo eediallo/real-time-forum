@@ -25,8 +25,4 @@ function validatePassword(password) {
   return password;
 }
 
-const password = validatePassword("hellohelloA9#");
-
-console.log(password);
-
 module.exports = validatePassword;
