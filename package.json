@@ -17,5 +17,8 @@
     "setupFilesAfterEnv": [
       "./jest.setup.js"
     ]
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.7"
   }
 }
