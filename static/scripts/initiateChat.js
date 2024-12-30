@@ -1,10 +1,9 @@
 import { createMessageChatBox } from "./chat/createChatMsg.js";
 import { createUserProfile } from "./chat/createUserPro.js";
-import { middlePart, leftSide } from "./chat/config.js";
+import { middlePart, leftSide, userTextingMsg } from "./chat/config.js";
 import { setupMessageInputListener } from "./ws/inputInitializer.js";
 
 let userReceivingMsg = "";
-const userTextingMsg = document.querySelector(".username").textContent;
 let chatBoxCreated = false;
 
 function initiateChatWithUser(onlineUser) {
