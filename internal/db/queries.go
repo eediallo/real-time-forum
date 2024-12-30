@@ -40,4 +40,20 @@ ON
 ORDER BY
 	p.CreatedAt DESC
 `
+
+	getUserByUserNameQuery = `
+        SELECT 
+            UserID, 
+			NickName, 
+			Age, FirstName, 
+			LastName, 
+			Gender, 
+			Username, 
+			Email, 
+			RegistrationDate, 
+			is_online
+        FROM 
+            User 
+        WHERE 
+            Username = ?`
 )
