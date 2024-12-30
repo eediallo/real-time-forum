@@ -50,6 +50,13 @@ const (
 			RegistrationDate
 		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
+	addChatContentQuery = `
+	INSERT INTO
+		PrivateMessages(
+		Content
+		) VALUES(?)
+	`
+
 	insertCommentToDBQuery = `
 		INSERT INTO Comments (
 			PostID,
