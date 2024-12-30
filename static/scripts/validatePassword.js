@@ -22,7 +22,8 @@ function validatePassword(password) {
       "Password must have at least least one additional character."
     );
   }
-  return password;
+
+  return true;
 }
 
 module.exports = validatePassword;

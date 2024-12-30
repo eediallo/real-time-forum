@@ -40,4 +40,8 @@ describe("valide password", () => {
       validatePassword(98);
     }).toThrow(targetInput);
   });
+
+  test("Accept valid password.", () => {
+    expect(validatePassword("Hello8elhadj#")).toBe(true);
+  });
 });
