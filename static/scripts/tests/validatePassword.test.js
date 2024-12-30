@@ -23,4 +23,21 @@ describe("valide password", () => {
       validatePassword("hellAohello");
     }).toThrow(targetInput);
   });
+
+  test("Reject password which does not includes selected additional characters.", () => {
+    const targetInput =
+      "Password must have at least least one additional character.";
+
+    expect(() => {
+      validatePassword("hellAohe1llo");
+    }).toThrow(targetInput);
+  });
+
+  test("Reject password of not type string.", () => {
+    const targetInput = "Password must be a string.";
+
+    expect(() => {
+      validatePassword(98);
+    }).toThrow(targetInput);
+  });
 });

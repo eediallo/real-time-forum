@@ -1,4 +1,10 @@
+const addChars = /['!""#$%&"()*,-./]/g;
+
 function validatePassword(password) {
+  if (typeof password !== "string") {
+    throw new Error("Password must be a string.");
+  }
+
   if (password.length < 8) {
     throw new Error("Password must have at least 8 characters.");
   }
@@ -11,10 +17,15 @@ function validatePassword(password) {
     throw new Error("Password must have at least one digit.");
   }
 
+  if (!password.match(addChars)) {
+    throw new Error(
+      "Password must have at least least one additional character."
+    );
+  }
   return password;
 }
 
-// const password = validatePassword("hellohelloA9");
+const password = validatePassword("hellohelloA9#");
 
 console.log(password);
 
