@@ -1,4 +1,4 @@
-const addChars = /['!""#$%&"()*,-./]/g;
+const addChars = /['!""#$%@&"()*,-./]/g;
 
 function validPassword(password) {
   if (typeof password !== "string") {
