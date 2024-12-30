@@ -3,7 +3,6 @@ const dashboardContainer = document.querySelector(".dashboard-container");
 const middlePart = document.querySelector(".middle-part");
 const leftSide = document.querySelector(".left-side");
 const userTextingMsg = document.querySelector(".username").textContent;
-const password = document.querySelector("#password").value;
 const signUpBtn = document.querySelector("#signUpBtn");
 
 //layout change
@@ -22,6 +21,5 @@ export {
   middlePart,
   leftSide,
   userTextingMsg,
-  password,
   signUpBtn,
 };
