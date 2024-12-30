@@ -5,13 +5,15 @@ import (
 	"net/http"
 
 	"github.com/eediallo/real_time_forum/internal/db"
+	"github.com/gorilla/mux"
 )
 
-// ProfilePage renders the user's profile page.
 func ProfilePage(w http.ResponseWriter, req *http.Request) {
+	// Extract the username from the URL
+	vars := mux.Vars(req)
+	profileUsername := vars["username"]
 
-	isAuthenticated := true
-
+	// Verify if the user is authenticated
 	cookie, err := req.Cookie("session_id")
 	if err != nil {
 		log.Println("No session_id cookie found:", err)
@@ -19,43 +21,46 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	var username string
+	// Retrieve the logged-in user's information
+	var loggedInUsername string
 	var userID int
 	query := `
-		SELECT
-				u.Username,
-				u.UserID
-			FROM 
-				Session AS s
-			INNER JOIN
-				User AS u
-			ON
-				s.UserID = u.UserID
-			WHERE 
-				SessionID = ?`
+        SELECT
+            u.Username,
+            u.UserID
+        FROM 
+            Session AS s
+        INNER JOIN
+            User AS u
+        ON
+            s.UserID = u.UserID
+        WHERE 
+            SessionID = ?`
 
-	err = db.DB.QueryRow(query, cookie.Value).Scan(&username, &userID)
+	err = db.DB.QueryRow(query, cookie.Value).Scan(&loggedInUsername, &userID)
 	if err != nil {
 		log.Println("Session not found or expired:", err)
 		http.Redirect(w, req, "/users/login", http.StatusSeeOther)
 		return
 	}
 
-	log.Println("Logged in user:", username)
+	// Log the logged-in user's information
+	log.Println("Logged in user:", loggedInUsername)
 
-	user, err := getUser(userID)
-	log.Printf("%v", user)
+	// Fetch the profile for the requested username
+	user, err := getUserByUsername(profileUsername)
 	if err != nil {
-		log.Printf("Error retrieving online users : %s", err.Error())
-		ErrorPageHandler(w, "Error retrieving online users", http.StatusInternalServerError)
+		log.Printf("Error retrieving user profile for username '%s': %s", profileUsername, err.Error())
+		ErrorPageHandler(w, "User not found", http.StatusNotFound)
 		return
 	}
 
+	// Render the profile page with the fetched user data
 	data := db.PageData{
 		HomePath:        homePagePath,
 		Logo:            logPath,
-		IsAuthenticated: isAuthenticated,
-		Username:        username,
+		IsAuthenticated: true,
+		Username:        loggedInUsername, // The logged-in user's username
 		HeaderCSS:       headerCSS,
 		User:            user,
 		ProfileCSS:      profilecss,
@@ -63,9 +68,16 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 	RenderTemplate(w, "profile", data)
 }
 
-func getUser(userID int) (db.User, error) {
-	query := "SELECT UserID, NickName, Age, FirstName, LastName, Gender, Username, Email, RegistrationDate, is_online FROM User WHERE UserID = ?"
-	row := db.DB.QueryRow(query, userID)
+func getUserByUsername(username string) (db.User, error) {
+	query := `
+        SELECT 
+            UserID, NickName, Age, FirstName, LastName, Gender, Username, Email, RegistrationDate, is_online
+        FROM 
+            User 
+        WHERE 
+            Username = ?`
+
+	row := db.DB.QueryRow(query, username)
 
 	var user db.User
 	if err := row.Scan(&user.UserID, &user.NickName, &user.Age, &user.FirstName, &user.LastName, &user.Gender, &user.Username, &user.Email, &user.RegistrationDate, &user.IsOnline); err != nil {
