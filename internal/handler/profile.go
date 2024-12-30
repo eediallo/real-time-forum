@@ -24,27 +24,14 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 	// Retrieve the logged-in user's information
 	var loggedInUsername string
 	var userID int
-	query := `
-        SELECT
-            u.Username,
-            u.UserID
-        FROM 
-            Session AS s
-        INNER JOIN
-            User AS u
-        ON
-            s.UserID = u.UserID
-        WHERE 
-            SessionID = ?`
 
-	err = db.DB.QueryRow(query, cookie.Value).Scan(&loggedInUsername, &userID)
+	err = db.DB.QueryRow(getUserBySessionIDQuery, cookie.Value).Scan(&loggedInUsername, &userID)
 	if err != nil {
 		log.Println("Session not found or expired:", err)
 		http.Redirect(w, req, "/users/login", http.StatusSeeOther)
 		return
 	}
 
-	// Log the logged-in user's information
 	log.Println("Logged in user:", loggedInUsername)
 
 	// Fetch the profile for the requested username
@@ -55,12 +42,11 @@ func ProfilePage(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// Render the profile page with the fetched user data
 	data := db.PageData{
 		HomePath:        homePagePath,
 		Logo:            logPath,
 		IsAuthenticated: true,
-		Username:        loggedInUsername, // The logged-in user's username
+		Username:        loggedInUsername,
 		HeaderCSS:       headerCSS,
 		User:            user,
 		ProfileCSS:      profilecss,
