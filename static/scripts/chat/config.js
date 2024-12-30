@@ -2,6 +2,7 @@ const onliUsers = document.querySelectorAll(".online");
 const dashboardContainer = document.querySelector(".dashboard-container");
 const middlePart = document.querySelector(".middle-part");
 const leftSide = document.querySelector(".left-side");
+const userTextingMsg = document.querySelector(".username").textContent;
 
 //layout change
 const postContainer = document.querySelector(".post-container");
@@ -13,4 +14,4 @@ whatOnYourMind.addEventListener("click", () => {
   postContainer.style.display = "block";
 });
 
-export { onliUsers, dashboardContainer, middlePart, leftSide };
+export { onliUsers, dashboardContainer, middlePart, leftSide, userTextingMsg };
