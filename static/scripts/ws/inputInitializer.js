@@ -1,8 +1,11 @@
 import { sendMessage } from "./sendMessage.js";
 import { socket } from "./ws.js";
-socket;
+
 function setupMessageInputListener(username) {
   const messageInput = document.querySelector("#chatInput");
+  const receiverUsername =
+    document.querySelector(".receiver-username").textContent;
+
   messageInput.addEventListener("keydown", (e) => {
     if (e.code === "Enter") {
       if (!socket) {
@@ -10,7 +13,7 @@ function setupMessageInputListener(username) {
         return false;
       }
       e.preventDefault();
-      sendMessage(username);
+      sendMessage(username, receiverUsername);
     }
   });
 }
