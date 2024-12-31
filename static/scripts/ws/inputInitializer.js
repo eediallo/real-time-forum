@@ -14,16 +14,15 @@ function setupMessageInputListener(username) {
         return false;
       }
       e.preventDefault();
-      console.log("Enter key pressed");
+      const chatInputValue = messageInput.value;
       sendMessage(username, receiverUsername);
-      sendChatContent();
+      sendChatContent(chatInputValue);
     }
   });
 
   const chatForm = document.querySelector("form");
   chatForm.onsubmit = (event) => {
     event.preventDefault();
-    console.log("Form submitted");
     const chatInputValue = messageInput.value;
     sendMessage(username, receiverUsername);
     sendChatContent(chatInputValue);
