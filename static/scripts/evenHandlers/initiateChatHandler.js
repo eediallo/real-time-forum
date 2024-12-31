@@ -14,10 +14,8 @@ function initiateChatHandler() {
 
       if (privateMessagesContainer) {
         const currentUser = document.querySelector(".username").textContent;
-        console.log(currentUser);
         const selectedUser =
           document.querySelector(".receiver-username").textContent;
-        console.log(selectedUser);
 
         fetch("/private_messages")
           .then((response) => response.json())
