@@ -35,7 +35,6 @@ function initiateChatHandler() {
                 const messageElement = document.createElement("div");
                 messageElement.classList.add("message");
                 messageElement.innerHTML = `
-                  <p><strong>${message.senderUsername}</strong> to <strong>${message.receiverUsername}</strong></p>
                   <p>${message.content}</p>
                   <p><small>${message.createdAt}</small></p>
                 `;
