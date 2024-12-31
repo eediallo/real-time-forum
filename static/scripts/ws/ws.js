@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     switch (data.action) {
       case "broadcast":
-        const chatMessages = document.querySelector(".PrivateMessages");
+        const chatMessages = document.querySelector(".privateMessages");
         chatMessages.innerHTML += `${data.message}<br>`;
         break;
       // case "private":
