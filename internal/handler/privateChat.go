@@ -22,15 +22,18 @@ func PrivateChat(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // Get chat input value
+    // Get chat input values
     chatContent := r.FormValue("chatInput")
-    if chatContent == "" {
-        http.Error(w, "Message cannot be empty", http.StatusBadRequest)
+    senderUsername := r.FormValue("senderUsername")
+    receiverUsername := r.FormValue("receiverUsername")
+
+    if chatContent == "" || senderUsername == "" || receiverUsername == "" {
+        http.Error(w, "Message, sender, and receiver cannot be empty", http.StatusBadRequest)
         return
     }
 
     // Insert chat content into the database
-    _, err = db.DB.Exec("INSERT INTO PrivateMessages (Content) VALUES (?)", chatContent)
+    _, err = db.DB.Exec("INSERT INTO PrivateMessages (SenderUsername, ReceiverUsername, Content) VALUES (?, ?, ?)", senderUsername, receiverUsername, chatContent)
     if err != nil {
         http.Error(w, "Failed to store message: "+err.Error(), http.StatusInternalServerError)
         return
