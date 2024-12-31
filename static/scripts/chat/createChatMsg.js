@@ -4,6 +4,7 @@ function createMessageChatBox(username) {
   const messageChatBox = document.createElement("section");
   messageChatBox.classList.add(".messageChatBox");
   const user = document.createElement("h2");
+  user.classList.add("receiver-username");
   user.textContent = username;
   const chatDescription = document.createElement("p");
   chatDescription.textContent = `This is the beginning of your direct message history with ${username}`;
