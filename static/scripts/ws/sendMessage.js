@@ -1,11 +1,10 @@
 import { socket } from "./ws.js";
 
-function sendMessage(username, receiverUsername = null) {
+function sendMessage(username) {
   let jsonData = {
-    action: receiverUsername ? "private" : "broadcast",
+    action: "broadcast",
     message: document.querySelector("#chatInput").value,
     username: username,
-    receiverUsername: receiverUsername,
   };
   socket.send(JSON.stringify(jsonData));
   document.querySelector("#chatInput").value = "";
