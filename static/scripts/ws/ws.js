@@ -33,13 +33,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     switch (data.action) {
       case "broadcast":
-        const chatMessages = document.querySelector(".chatMessages");
+        const chatMessages = document.querySelector(".PrivateMessages");
         chatMessages.innerHTML += `${data.message}<br>`;
         break;
-      case "private":
-        const privateMessages = document.querySelector(".privateMessages");
-        privateMessages.innerHTML += `${data.message}<br>`;
-        break;
+      // case "private":
+      //   const privateMessages = document.querySelector(".privateMessages");
+      //   privateMessages.innerHTML += `${data.message}<br>`;
+      //   break;
     }
   };
 });
