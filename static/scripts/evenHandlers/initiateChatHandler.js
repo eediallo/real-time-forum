@@ -46,14 +46,6 @@ function initiateChatHandler() {
             console.error("Error fetching private messages:", error);
           });
       }
-
-      //========================================================
-
-      const chatForm = document.querySelector("form");
-      chatForm.onsubmit = (event) => {
-        event.preventDefault();
-        sendChatContent();
-      };
     })
   );
 }
