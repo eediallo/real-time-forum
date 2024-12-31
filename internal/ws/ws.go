@@ -40,6 +40,7 @@ type WsPayload struct {
 	Message  string              `json:"message"`
 	Conn     WebSocketConnection `json:"-"`
 	User     db.User
+	Receiver string `json:"receiver"`
 }
 
 func WsEndpoint(w http.ResponseWriter, r *http.Request) {
@@ -129,6 +130,11 @@ func ListenToWsChannel() {
 			response.Action = "broadcast"
 			response.Message = fmt.Sprintf("<strong>%s</strong>: %s", e.Username, e.Message)
 			BroadCastToAll(response)
+
+		case "private":
+			response.Action = "private"
+			response.Message = fmt.Sprintf("<strong>%s</strong>: %s", e.Username, e.Message)
+			sendPrivateMessage(response, e.Receiver)
 		}
 	}
 }
@@ -162,6 +168,22 @@ func BroadCastToAll(response WsJonResponse) {
 			log.Printf("WebSocket error for client %v: %v", client, err)
 			_ = client.Close()
 			delete(clients, client)
+		}
+	}
+}
+
+func sendPrivateMessage(response WsJonResponse, receiver string) {
+	mu.Lock()
+	defer mu.Unlock()
+	for client, username := range clients {
+		if username == receiver {
+			err := client.WriteJSON(response)
+			if err != nil {
+				log.Printf("WebSocket error for client %v: %v", client, err)
+				_ = client.Close()
+				delete(clients, client)
+			}
+			break
 		}
 	}
 }
