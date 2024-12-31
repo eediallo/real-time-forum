@@ -36,4 +36,3 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
-
