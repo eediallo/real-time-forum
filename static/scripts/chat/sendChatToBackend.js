@@ -14,8 +14,6 @@ async function sendChatContent(chatInputValue) {
     receiverUsername: receiverUsername,
   });
 
-  console.log("Payload:", payload.toString());
-
   try {
     const response = await fetch("http://localhost:8080/dashboard", {
       method: "POST",
