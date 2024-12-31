@@ -4,8 +4,11 @@ async function displayPrivateMessages() {
   const privateMessagesContainer = document.querySelector(".privateMessages");
   const currentUser = document.querySelector(".username").textContent;
   const selectedUser = document.querySelector(".receiver-username").textContent;
+
   const messages = await fetchPrivateMessages();
-  renderPrivateMessages();
+  if (messages.length > 0) {
+    renderPrivateMessages();
+  }
 
   function renderPrivateMessages() {
     messages
@@ -20,9 +23,9 @@ async function displayPrivateMessages() {
         const messageElement = document.createElement("div");
         messageElement.classList.add("message");
         messageElement.innerHTML = `
-                <p><strong>${message.senderUsername}</strong>: ${message.content}</p>
-                <p><small>${message.createdAt}</small></p>
-              `;
+                                <p><strong>${message.senderUsername}</strong>: ${message.content}</p>
+                                <p><small>${message.createdAt}</small></p>
+                            `;
         privateMessagesContainer.appendChild(messageElement);
       });
   }
