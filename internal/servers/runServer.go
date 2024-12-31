@@ -27,6 +27,7 @@ func SetupRouter() *mux.Router {
 	r.Handle("/add_comment", middleware.AuthMiddleware(http.HandlerFunc(handler.AddComment)))
 	r.Handle("/dashboard", middleware.AuthMiddleware(http.HandlerFunc(handler.DashboardPage))).Methods("GET")
 	r.Handle("/dashboard", middleware.AuthMiddleware(http.HandlerFunc(handler.PrivateChat))).Methods("POST")
+	r.Handle("/private_messages", middleware.AuthMiddleware(http.HandlerFunc(handler.FetchPrivateMessages))).Methods("GET")
 	r.Handle("/like", middleware.AuthMiddleware(http.HandlerFunc(handler.LikePostHandler)))
 	r.Handle("/dislike", middleware.AuthMiddleware(http.HandlerFunc(handler.DislikePostHandler)))
 	r.Handle("/like_dislike_comment", middleware.AuthMiddleware(http.HandlerFunc(handler.LikeDislikeCommentHandler)))
