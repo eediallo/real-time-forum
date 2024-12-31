@@ -33,7 +33,7 @@ function initiateChatHandler() {
                 const messageElement = document.createElement("div");
                 messageElement.classList.add("message");
                 messageElement.innerHTML = `
-                  <p>${message.content}</p>
+                  <p><strong>${message.senderUsername}</strong>: ${message.content}</p>
                   <p><small>${message.createdAt}</small></p>
                 `;
                 privateMessagesContainer.appendChild(messageElement);
