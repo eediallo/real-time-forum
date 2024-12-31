@@ -12,7 +12,9 @@
   <div class="auth-links">
     {{if .IsAuthenticated}}
     <button class="profile">
-      <a class="username" href="../users/{{.Username}}">{{.Username}}</a>
+      <a class="username" href="../users/{{.Username}}"
+        ><strong>{{.Username}}</strong></a
+      >
     </button>
     <button class="logout"><a href="../users/logout">Logout</a></button>
     {{else}}
