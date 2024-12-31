@@ -36,6 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const chatMessages = document.querySelector(".chatMessages");
         chatMessages.innerHTML += `${data.message}<br>`;
         break;
+      case "private":
+        const privateMessages = document.querySelector(".privateMessages");
+        privateMessages.innerHTML += `${data.message}<br>`;
+        break;
     }
   };
 });
