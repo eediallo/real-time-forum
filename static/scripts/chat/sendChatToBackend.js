@@ -1,15 +1,15 @@
-async function sendChatContent() {
-  const chatInput = document.querySelector("#chatInput").value;
+async function sendChatContent(chatInputValue) {
   const senderUsername = document.querySelector(".username").textContent;
-  const receiverUsername = document.querySelector(".receiver-username").textContent;
+  const receiverUsername =
+    document.querySelector(".receiver-username").textContent;
 
-  if (!chatInput) {
+  if (!chatInputValue) {
     alert("Message cannot be empty");
     return;
   }
 
   const payload = new URLSearchParams({
-    chatInput: chatInput,
+    chatInput: chatInputValue,
     senderUsername: senderUsername,
     receiverUsername: receiverUsername,
   });
