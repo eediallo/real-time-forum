@@ -1,57 +1,5 @@
 package handler
 
-type Post struct {
-	UserID       int
-	PostID       int
-	Title        string
-	Content      string
-	CreatedAt    string
-	Category     string
-	Username     string
-	MediaPath    string
-	Comments     []Comment
-	CommentCount int
-	LikeCount    int
-	DislikeCount int
-}
-
-type Comment struct {
-	CommentID    int
-	PostID       int
-	Content      string
-	CreatedAt    string
-	Username     string
-	LikeCount    int
-	DislikeCount int
-}
-
-type PageData struct {
-	Username             string
-	HeaderCSS            string
-	CommentJS            string
-	DashboardCSS         string
-	Posts                []Post
-	CssLoginPath         string
-	CssRegisterPath      string
-	HomePath             string
-	CSSHomePage          string
-	Logo                 string
-	LogoCSS              string
-	GoogleIcons          string
-	JsImage              string
-	GoIamge              string
-	RustImage            string
-	GolangOfficialPage   string
-	RustOfficialPage     string
-	JSOfficialPage       string
-	LikeDislike          string
-	IsAuthenticated      bool
-	ErrorMessage         string
-	LoginJS              string
-	LikeDislikeCommentJS string
-	FilterJS             string
-}
-
 var (
 	homePagePath = "/"
 	// dashboardPagePath = "/dashboard"
@@ -62,9 +10,11 @@ var (
 	dashboardCSS    = styleDir + "dashboard.css"
 	cssRegisterPath = styleDir + "register.css"
 	cssLogoPath     = styleDir + "logo.css"
+	profilecss      = styleDir + "profile.css"
 
-	imagesDir = "/static/images/"
-	logPath   = imagesDir + "forum_logo.png"
+	imagesDir            = "/static/images/"
+	logPath              = imagesDir + "forum_logo.png"
+	signUpCoverImagePath = imagesDir + "sign-up.avif"
 
 	jsDir                    = "/static/scripts/"
 	commentJS                = jsDir + "comments.js"
@@ -72,6 +22,10 @@ var (
 	loginJSPath              = jsDir + "login.js"
 	likeDislikeCommentJsPath = jsDir + "likeDislikeComment.js"
 	filterJsPath             = jsDir + "filter.js"
+	wsPath                   = jsDir + "ws/ws.js"
+	privateMessageJS         = jsDir + "privateMessage.js"
+	mainjs                   = jsDir + "main.js"
+	validatePasswordJS       = jsDir + "validatePassword.js"
 
 	googleIcons = "https://fonts.googleapis.com/icon?family=Material+Icons"
 
@@ -82,9 +36,6 @@ var (
 	goOfficialPagePath   = "https://go.dev/"
 	jsOfficialPagePath   = "https://www.javascript.com/"
 	rustOfficialPagePath = "https://www.rust-lang.org/"
-
-	// status code
-
 )
 
 type StatT = uint8

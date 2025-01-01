@@ -4,21 +4,26 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/abdoulcyf/forum/internal/db"
-	"github.com/abdoulcyf/forum/internal/utils"
+	"github.com/eediallo/real_time_forum/internal/db"
+	"github.com/eediallo/real_time_forum/internal/utils"
 )
 
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		username := r.FormValue("username")
+		nickName := r.FormValue("nickName")
+		age := r.FormValue("age")
+		firstName := r.FormValue("firstName")
+		lastName := r.FormValue("lastName")
+		gender := r.FormValue("gender")
 		email := r.FormValue("email")
 		password := r.FormValue("password")
 		registrationDate := time.Now()
 
 		// Check if the username already exists
-		exists, err := checkEmailExists(email)
+		exists, err := checkEmailExistsOrNickName(email, nickName)
 		if err != nil {
-			http.Error(w, "Email already exists in db", http.StatusInternalServerError)
+			http.Error(w, "Emai/NicKName already exists in db", http.StatusInternalServerError)
 			return
 		}
 		if exists {
@@ -33,7 +38,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		_, err = db.DB.Exec(addUserDetailsQuery, username, email, hashedPassword, registrationDate)
+		_, err = db.DB.Exec(addUserDetailsQuery, nickName, age, firstName, lastName, gender, username, email, hashedPassword, registrationDate)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -41,19 +46,21 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 		http.Redirect(w, r, "/users/login", http.StatusSeeOther)
 	} else {
-		data := PageData{
-			CssRegisterPath: cssRegisterPath,
-			HomePath:        homePagePath,
-			LogoCSS:         cssLogoPath,
-			Logo:            logPath,
+		data := db.PageData{
+			CssRegisterPath:    cssRegisterPath,
+			HomePath:           homePagePath,
+			LogoCSS:            cssLogoPath,
+			Logo:               logPath,
+			SignUpCoverImage:   signUpCoverImagePath,
+			ValidatePasswordJS: validatePasswordJS,
 		}
 		RenderTemplate(w, "register", data)
 	}
 }
 
-func checkEmailExists(email string) (bool, error) {
+func checkEmailExistsOrNickName(email, nickName string) (bool, error) {
 	var exists bool
-	query := "SELECT EXISTS(SELECT 1 FROM User WHERE Email=?)"
-	err := db.DB.QueryRow(query, email).Scan(&exists)
+	query := "SELECT EXISTS(SELECT 1 FROM User WHERE Email=? OR NickName=?)"
+	err := db.DB.QueryRow(query, email, nickName).Scan(&exists)
 	return exists, err
 }

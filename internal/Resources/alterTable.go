@@ -3,7 +3,7 @@ package Resources
 import (
 	"fmt"
 
-	"github.com/abdoulcyf/forum/internal/db"
+	"github.com/eediallo/real_time_forum/internal/db"
 )
 
 func AlterSessionTable() error {

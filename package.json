@@ -1,0 +1,25 @@
+{
+  "name": "real-time-forum",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
+    ]
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.7"
+  }
+}

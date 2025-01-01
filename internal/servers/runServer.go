@@ -3,36 +3,48 @@ package servers
 import (
 	"net/http"
 
-	"github.com/abdoulcyf/forum/internal/handler"
-	"github.com/abdoulcyf/forum/internal/middleware"
+	"github.com/eediallo/real_time_forum/internal/handler"
+	"github.com/eediallo/real_time_forum/internal/middleware"
+	"github.com/eediallo/real_time_forum/internal/ws"
+	"github.com/gorilla/mux"
 )
 
-//
-func RunServer() (*http.Server, error) {
+func SetupRouter() *mux.Router {
+	r := mux.NewRouter()
+
 	// available routes for all individuals on the internet
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", handler.HomePage)
-	mux.HandleFunc("/users/sign_up", handler.RegisterUser)
-	mux.HandleFunc("/users/login", handler.LoginUser)
-	mux.HandleFunc("/dashboard/", handler.DashboardPage)
+	r.HandleFunc("/", handler.HomePage)
+	r.HandleFunc("/users/sign_up", handler.RegisterUser)
+	r.HandleFunc("/users/login", handler.LoginUser)
+
+	// WebSocket route
+	r.HandleFunc("/ws", ws.WsEndpoint)
 
 	// Protected routes
-	mux.Handle("/users/logout", middleware.AuthMiddleware(http.HandlerFunc(handler.LogoutUser)))
-	mux.Handle("/profile", middleware.AuthMiddleware(http.HandlerFunc(handler.ProfilePage)))
-	mux.Handle("/post", middleware.AuthMiddleware(http.HandlerFunc(handler.PostHandler)))
-	mux.Handle("/add_comment", middleware.AuthMiddleware(http.HandlerFunc(handler.AddComment)))
-	mux.Handle("/like", middleware.AuthMiddleware(http.HandlerFunc(handler.LikePostHandler)))
-	mux.Handle("/dislike", middleware.AuthMiddleware(http.HandlerFunc(handler.DislikePostHandler)))
-	mux.Handle("/like_dislike_comment", middleware.AuthMiddleware(http.HandlerFunc(handler.LikeDislikeCommentHandler)))
+	r.Handle("/users/logout", middleware.AuthMiddleware(http.HandlerFunc(handler.LogoutUser)))
+	r.Handle("/users/{username}", middleware.AuthMiddleware(http.HandlerFunc(handler.ProfilePage))).Methods("GET")
+	r.Handle("/post", middleware.AuthMiddleware(http.HandlerFunc(handler.PostHandler)))
+	r.Handle("/add_comment", middleware.AuthMiddleware(http.HandlerFunc(handler.AddComment)))
+	r.Handle("/dashboard", middleware.AuthMiddleware(http.HandlerFunc(handler.DashboardPage))).Methods("GET")
+	r.Handle("/dashboard", middleware.AuthMiddleware(http.HandlerFunc(handler.PrivateChat))).Methods("POST")
+	r.Handle("/private_messages", middleware.AuthMiddleware(http.HandlerFunc(handler.FetchPrivateMessages))).Methods("GET")
+	r.Handle("/like", middleware.AuthMiddleware(http.HandlerFunc(handler.LikePostHandler)))
+	r.Handle("/dislike", middleware.AuthMiddleware(http.HandlerFunc(handler.DislikePostHandler)))
+	r.Handle("/like_dislike_comment", middleware.AuthMiddleware(http.HandlerFunc(handler.LikeDislikeCommentHandler)))
 
 	// Serve static files from the "static" directory
-	// ????<<<<<<add custom function to handle error in cas dir not exist
 	fileServer := http.FileServer(http.Dir("./static"))
-	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static", fileServer))
+
+	return r
+}
+
+func RunServer() (*http.Server, error) {
+	r := SetupRouter()
 
 	server := &http.Server{
 		Addr:    ":8080",
-		Handler: mux,
+		Handler: r,
 	}
 
 	return server, nil

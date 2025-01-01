@@ -1,41 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign up</title>
-    <link rel="stylesheet" href="{{.CssRegisterPath}}">
-    <link rel="stylesheet" href="{{.LogoCSS}}">
-</head>
+    <link rel="stylesheet" href="{{.CssRegisterPath}}" />
+    <link rel="stylesheet" href="{{.LogoCSS}}" />
+    <script type="module" src="{{.ValidatePasswordJS}}" defer></script>
+  </head>
 
-<body>
- <main>  
- <section>  
-    <a href="{{.HomePath}}">
-        <img src="{{.Logo}}"  alt="Return to Home Page" class="logo">
-    </a>
- </section>   
-<section>
- <div>
+  <body>
     <div class="register-container">
- <!--        <h1>Sign Up</h1>-->
-<form action="/users/sign_up" method="POST">
-    <label for="username">Username:</label>
-    <input style=" padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;" type="text" id="username" name="username" required><br>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required><br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br>
-    <input type="submit" value="Sign Up">
-</form>
+      <div class="registration-form">
+        <!--        <h1>Sign Up</h1>-->
+        <form action="/users/sign_up" method="POST">
+          <label for="nickName">Nick Name:</label>
+          <input type="text" id="nickName" name="nickName" required /><br />
+
+          <label for="age">Age:</label>
+          <input type="text" id="age" name="age" required /><br />
+
+          <label for="firstName">First Name:</label>
+          <input type="text" id="firstName" name="firstName" required /><br />
+
+          <label for="lastName">Last Name:</label>
+          <input type="text" id="lastName" name="lastName" required /><br />
+
+          <label for="gender">Gender:</label>
+          <select name="gender" id="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option></select
+          ><br />
+
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required /><br />
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required /><br />
+
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required /><br />
+
+          <input id="signUpBtn" type="submit" value="Sign Up" />
+        </form>
+        <p>Already registered? <a href="/users/login">Login here</a></p>
+        <div id="error-message" class="error-message">{{.ErrorMessage}}</div>
+      </div>
+
+      <div class="sign-up-cover-image">
+        <div class="logo-container">
+          <a href="{{.HomePath}}">
+            <img src="{{.Logo}}" alt="Return to Home Page" class="logo" />
+          </a>
+        </div>
+      </div>
     </div>
-<p>Already registered? <a href="/users/login">Login here</a></p>
-</div>
-</section>
-</main> 
-</body>
+  </body>
 </html>

@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/abdoulcyf/forum/internal/db"
-	"github.com/abdoulcyf/forum/internal/utils"
+	"github.com/eediallo/real_time_forum/internal/db"
+	"github.com/eediallo/real_time_forum/internal/utils"
 	"github.com/gofrs/uuid"
 )
 
@@ -15,19 +15,23 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	var errorMessage string
 	if r.Method == http.MethodPost {
 		email := r.FormValue("email")
+		nickName := r.FormValue("nickname")
 		password := r.FormValue("password")
 
-		if email == "" {
-			errorMessage += "Email is required. "
+		if email == "" && nickName == "" {
+			errorMessage += "Email or NickName is required. "
 		}
 		if password == "" {
 			errorMessage += "Password is required. "
 		}
 
-		var storedHash string
-		var userID int
-		var username string
-		err := db.DB.QueryRow(userByEmailQuery, email).Scan(&storedHash, &userID, &username)
+		var (
+			storedHash string
+			userID     int
+			username   string
+		)
+
+		err := db.DB.QueryRow(userByEmailQuery, email, nickName).Scan(&storedHash, &userID, &nickName, &username)
 		if err != nil {
 			if err == sql.ErrNoRows {
 				ErrorPageHandler(w, "User not found", nil)
@@ -59,6 +63,13 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		// update is online field
+		_, err = db.DB.Exec("UPDATE User SET is_online = 1 WHERE UserID = ?", userID)
+		if err != nil {
+			log.Println("Error updating user online status:", err)
+			http.Redirect(w, r, loginPath, http.StatusSeeOther)
+			return
+		}
 		cookie := http.Cookie{
 			Name:     "session_id",
 			Value:    sessionID.String(),
@@ -75,7 +86,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := PageData{
+	data := db.PageData{
 		CssLoginPath: cssLoginPath,
 		Logo:         logPath,
 		HomePath:     homePagePath,

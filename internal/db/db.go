@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 var DB *sql.DB
@@ -34,7 +36,7 @@ func InitDB() error {
 	return nil
 }
 
-//resource management -> avoid file corruption or memory leak
+// resource management -> avoid file corruption or memory leak
 func CloseDB() {
 	err := DB.Close()
 	if err != nil {

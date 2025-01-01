@@ -3,9 +3,10 @@ package main
 import (
 	"log"
 
-	"github.com/abdoulcyf/forum/internal/db"
-	"github.com/abdoulcyf/forum/internal/handler"
-	"github.com/abdoulcyf/forum/internal/servers"
+	"github.com/eediallo/real_time_forum/internal/db"
+	"github.com/eediallo/real_time_forum/internal/handler"
+	"github.com/eediallo/real_time_forum/internal/servers"
+	"github.com/eediallo/real_time_forum/internal/ws"
 )
 
 func main() {
@@ -20,6 +21,9 @@ func main() {
 
 	log.Println("Initializing all templates")
 	handler.InitTemplates()
+
+	log.Println("Starting channel listener")
+	go ws.ListenToWsChannel()
 
 	log.Println("Start running server")
 	server, errRunServer := servers.RunServer()
