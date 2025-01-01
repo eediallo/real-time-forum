@@ -1,21 +1,25 @@
 package db
 
-import "time"
+import (
+	"database/sql"
+	"time"
+)
 
 // User represents a user in the system
 type User struct {
-	UserID           int       `json:"user_id"`
-	NickName         string    `json:"nickname"`
-	Age              int       `json:"age"`
-	FirstName        string    `json:"first_name"`
-	LastName         string    `json:"last_name"`
-	Gender           string    `json:"gender"`
-	Username         string    `json:"username"`
-	Email            string    `json:"email"`
-	PasswordHash     string    `json:"password_hash"`
-	RegistrationDate time.Time `json:"registration_date"`
-	IsOnline         bool      `json:"is_online"`
-	LastMessage      string    `json:"last_message"`
+	UserID           int            `json:"user_id"`
+	NickName         string         `json:"nickname"`
+	Age              int            `json:"age"`
+	FirstName        string         `json:"first_name"`
+	LastName         string         `json:"last_name"`
+	Gender           string         `json:"gender"`
+	Username         string         `json:"username"`
+	Email            string         `json:"email"`
+	PasswordHash     string         `json:"password_hash"`
+	RegistrationDate time.Time      `json:"registration_date"`
+	IsOnline         bool           `json:"is_online"`
+	LastMessage      sql.NullString `json:"last_message"`
+	LastMessageTime  time.Time      `json:"last_message_time"`
 }
 
 // func GetAllUsers() ([]User, error) {

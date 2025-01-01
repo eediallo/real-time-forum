@@ -14,7 +14,7 @@ func DashboardPage(w http.ResponseWriter, r *http.Request) {
 	// Try to retrieve the session ID from the cookie
 	username, isAuthenticated, errAuth := middleware.CheckUserAuthentication(r)
 	if errAuth != nil {
-		log.Printf("Error authenticanting user : %s", errAuth.Error())
+		log.Printf("Error authenticating user : %s", errAuth.Error())
 		return
 	}
 

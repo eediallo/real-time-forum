@@ -3,14 +3,15 @@ CREATE TABLE IF NOT EXISTS User (
     NickName TEXT NOT NULL,
     Age INTEGER NOT NULL,
     FirstName TEXT NOT NULL,
-    LastName TEXt NOT NULL,
+    LastName TEXT NOT NULL,
     Gender TEXT NOT NULL,
     Username TEXT NOT NULL UNIQUE,
     Email TEXT NOT NULL,
     PasswordHash TEXT NOT NULL,
     RegistrationDate DATETIME NOT NULL,
-    is_online BOOLEAN DEFAULT 0,  -- Added to track online status,
-    LastMessage TEXT
+    is_online BOOLEAN DEFAULT 0,  -- Added to track online status
+    LastMessage TEXT,
+    LastMessageTime DATETIME DEFAULT '1970-01-01 00:00:00'  -- Added to track the last message timestamp
 );
 
 CREATE TABLE IF NOT EXISTS Post (
