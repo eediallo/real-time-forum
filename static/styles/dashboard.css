@@ -296,3 +296,14 @@ option {
 .status-offline {
   color: red;
 }
+
+.messageChatBox {
+  overflow: hidden;
+  max-height: 100%;
+  background-color: green;
+}
+
+.privateMessages {
+  overflow-y: scroll;
+  max-height: 400px;
+}
