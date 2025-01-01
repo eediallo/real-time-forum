@@ -1,5 +1,9 @@
 function groupMessagesByDate(messages) {
-  return messages.reduce((acc, message) => {
+  const sortedMessages = messages.sort(
+    (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+  );
+
+  return sortedMessages.reduce((acc, message) => {
     const date = new Date(message.createdAt).toLocaleDateString();
     if (!acc[date]) {
       acc[date] = [];
