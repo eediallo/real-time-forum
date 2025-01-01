@@ -1,88 +1,92 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: white;
-    border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
 }
 
 a {
-    /* margin-left: 25px; */
-    text-decoration: none;
-    color: black;
-    align-items: center;
+  /* margin-left: 25px; */
+  text-decoration: none;
+  color: black;
+  align-items: center;
 }
 
-.auth-links{
-    margin-top: 20px;
+.auth-links {
+  margin-top: 20px;
 }
 
 button.profile,
 button.logout {
-    background-color: #5CE1E6;
-    color: black;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 5px;
-    justify-content: center;
-    align-items: center;
+  background-color: #5ce1e6;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 5px;
+  justify-content: center;
+  align-items: center;
 }
 
 .auth-links a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 main {
-    padding: 20px;
+  padding: 20px;
 }
 @media screen and (max-width: 768px) {
-    .header {
-       width: 100%;
-    }
+  .header {
+    width: 100%;
+  }
 
-    #search {
-        width: 100%;
-        display: none;
-    }
+  #search {
+    width: 100%;
+    display: none;
+  }
 }
 
 .logo {
-    padding: 0;
-    height: 100px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: center;
-    align-items: center; 
+  padding: 0;
+  height: 100px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  align-items: center;
 }
 
 .profile {
-margin: auto;
+  margin: auto;
 }
 
- .search-bar{
-    display: flex;
-    align-items: center;
-    position: relative;
-} 
+.search-bar {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
 
-#search{
-    width: 400px;
-    padding: 15px;
-    border-radius: 8px;
-} 
+#search {
+  width: 400px;
+  padding: 15px;
+  border-radius: 8px;
+}
 
 .search-bar .icon-search {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none; /* Prevent the icon from blocking input interactions */
-  }
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Prevent the icon from blocking input interactions */
+}
