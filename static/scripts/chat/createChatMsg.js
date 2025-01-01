@@ -1,8 +1,9 @@
 import { middlePart } from "./config.js";
 
 function createMessageChatBox(username) {
-  const messageChatBox = document.createElement("section");
-  messageChatBox.classList.add(".messageChatBox");
+  const messageChatBox = document.createElement("div");
+  messageChatBox.style.width = "100%";
+  messageChatBox.classList.add(".private-messages-container");
   const user = document.createElement("h2");
   user.classList.add("receiver-username");
   user.textContent = username;
