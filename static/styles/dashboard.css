@@ -54,7 +54,7 @@ body {
 .dashboard-container {
   display: flex;
   justify-content: space-between;
-  overflow: hidden;
+  margin: 150px 50px;
 }
 
 .left-side,
