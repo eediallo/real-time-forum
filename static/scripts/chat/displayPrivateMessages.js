@@ -1,5 +1,8 @@
 import { fetchPrivateMessages } from "./fetchPrivateMessages.js";
-import { renderPrivateMessages } from "./renderPrivateMessage.js";
+import {
+  renderPrivateMessages,
+  setupScrollListener,
+} from "./renderPrivateMessage.js";
 
 async function displayPrivateMessages() {
   const privateMessagesContainer = document.querySelector(".privateMessages");
@@ -9,6 +12,12 @@ async function displayPrivateMessages() {
   const messages = await fetchPrivateMessages();
   if (messages.length > 0) {
     renderPrivateMessages(
+      messages,
+      currentUser,
+      selectedUser,
+      privateMessagesContainer
+    );
+    setupScrollListener(
       messages,
       currentUser,
       selectedUser,
