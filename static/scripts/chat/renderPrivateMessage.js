@@ -38,7 +38,7 @@ function renderPrivateMessages(
   }
 
   const groupedMessages = groupMessagesByDate(messagesToRender);
-  loadedMessagesCount += messagesPerLoad;
+  loadedMessagesCount += messagesToRender.length;
 
   const initialScrollHeight = privateMessagesContainer.scrollHeight;
 
@@ -75,13 +75,21 @@ function renderPrivateMessages(
   }
 }
 
+function debounce(func, wait) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
+
 function setupScrollListener(
   messages,
   currentUser,
   selectedUser,
   privateMessagesContainer
 ) {
-  privateMessagesContainer.addEventListener("scroll", () => {
+  const handleScroll = debounce(() => {
     if (privateMessagesContainer.scrollTop === 0) {
       renderPrivateMessages(
         messages,
@@ -105,7 +113,9 @@ function setupScrollListener(
         "down"
       );
     }
-  });
+  }, 200);
+
+  privateMessagesContainer.addEventListener("scroll", handleScroll);
 }
 
 export { renderPrivateMessages, setupScrollListener };
