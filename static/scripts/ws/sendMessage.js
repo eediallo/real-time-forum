@@ -15,7 +15,7 @@ async function showNotification() {
   const permission = await Notification.requestPermission();
 
   if (permission === "granted") {
-    const Notification = new Notification("New message", {
+    new Notification("New message", {
       body: "You have recieved a new message",
     });
   }
