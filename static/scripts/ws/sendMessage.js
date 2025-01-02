@@ -11,4 +11,14 @@ function sendMessage(username) {
   console.log(jsonData, "<=====json data");
 }
 
-export { sendMessage };
+async function showNotification() {
+  const permission = await Notification.requestPermission();
+
+  if (permission === "granted") {
+    const Notification = new Notification("New message", {
+      body: "You have recieved a new message",
+    });
+  }
+}
+
+export { sendMessage, showNotification };
