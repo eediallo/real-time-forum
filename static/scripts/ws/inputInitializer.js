@@ -1,5 +1,5 @@
 import { sendChatContent } from "../chat/sendChatToBackend.js";
-import { sendMessage } from "./sendMessage.js";
+import { sendMessage, showNotification } from "./sendMessage.js";
 import { socket } from "./ws.js";
 
 function setupMessageInputListener(username) {
@@ -16,6 +16,7 @@ function setupMessageInputListener(username) {
       e.preventDefault();
       const chatInputValue = messageInput.value;
       sendMessage(username, receiverUsername);
+      showNotification();
       sendChatContent(chatInputValue);
     }
   });
